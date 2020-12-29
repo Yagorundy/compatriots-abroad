@@ -13,6 +13,16 @@ export default {
     ]
   },
 
+  // Custom routing
+  router: {
+    extendRoutes(routes) {
+      routes.push(...[
+        { path: '*', redirect: '/' },
+        { path: '/', redirect: '/overview' }
+      ])
+    }
+  },
+
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
   ],
