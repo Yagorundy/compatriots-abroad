@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
-import Logo from '@/components/Logo.vue'
+import GoogleMap from '@/components/GoogleMap.vue'
 
-describe('Logo', () => {
+describe('GoogleMap', () => {
   test('is a Vue instance', () => {
-    const wrapper = mount(Logo)
+    const wrapper = mount(GoogleMap)
     expect(wrapper.vm).toBeTruthy()
   })
 })
