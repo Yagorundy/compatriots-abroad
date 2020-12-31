@@ -9,7 +9,11 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "common/*": ["../common/*"]
+    },
     "incremental": true
   },
-  // "include": ["./", "../common/"]
+  "include": ["./src", "../common"]
 }
