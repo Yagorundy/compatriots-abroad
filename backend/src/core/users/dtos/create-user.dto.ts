@@ -1,4 +1,4 @@
-import { ICreateUserDto } from 'common/transfer/create-user-dto.interface'
+import { ICreateUserDto } from "../../../../../common/transfer/create-user-dto.interface"
 
 export class CreateUserDto implements ICreateUserDto {
     firstName: string
