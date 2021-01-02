@@ -5,6 +5,6 @@ import { GeocodingConfigService } from './geocoding-config.service'
 @Module({
     providers: [GeocodingConfigService],
     imports: [ConfigModule.forRoot()],
-    exports: [GeocodingConfigService]
+    exports: [ConfigModule, GeocodingConfigService]
 })
 export class GeocodingConfigModule {}

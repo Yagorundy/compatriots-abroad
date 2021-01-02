@@ -11,13 +11,18 @@ export class GeocodingService {
                 params: { address }
             })
             .toPromise()
-        const country = data.results[0].address_components.find((c) =>
-            c.types.includes('country')
-        )
+
+        if (data.status === 'ZERO_RESULTS') throw new Error('Could not find location')
+        const result = data.results[0]
+
+        const country = result.address_components.find(c => c.types.includes('country'))
+        const coords = result.geometry.location;
+
         return {
-            ...data,
             country: country.long_name,
-            countryCode: country.short_name
+            countryCode: country.short_name,
+            lat: coords.lat,
+            lng: coords.lng
         }
     }
 }
