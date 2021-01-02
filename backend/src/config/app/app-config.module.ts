@@ -5,6 +5,6 @@ import { AppConfigService } from './app-config.service'
 @Module({
     providers: [AppConfigService],
     imports: [ConfigModule.forRoot()],
-    exports: [AppConfigService]
+    exports: [ConfigModule, AppConfigService]
 })
-export class AppConfigModule {}
+export class AppConfigModule { }

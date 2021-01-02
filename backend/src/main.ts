@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core'
-import { AppErrorFilter } from './api/filters/app-error.filter'
+import { AppErrorFilter } from './api/app-error.filter'
 import { AppModule } from './app.module'
 import { AppConfigService } from './config/app/app-config.service'
 
