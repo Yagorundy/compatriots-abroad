@@ -1,0 +1,38 @@
+$col-prefix: 'col-';
+
+[class*="#{$col-prefix}"] {
+  width: 100%;
+}
+
+$grid-breakpoints: (
+  'sm': 576,
+  'md': 768,
+  'lg': 992,
+  'xl': 1200
+);
+$grid-cols: 12;
+
+@mixin create-col-classes($bp-name, $bp-value) {
+  @media screen and (min-width: $bp-value * 1px) {
+    @for $i from 1 through $grid-cols {
+      $col-suffix: if($bp-name != '', #{$bp-name}-#{$i}, $i);
+      $width: (100 / ($grid-cols / $i)) * 1%;
+      .#{$col-prefix}#{$col-suffix} {
+        width: $width;
+        flex-basis: $width;
+      }
+    }
+  }
+}
+
+@each $bp-name , $bp-value in $grid-breakpoints {
+  @include create-col-classes($bp-name, $bp-value);
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
