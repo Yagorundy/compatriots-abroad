@@ -1,6 +1,8 @@
 <template>
-  <header>
+  <div class="header">
     <nav>
+      <!-- TODO: add icons -->
+      <!-- TODO: add curves -->
       <div class="col-md-3 col-lg-2 link">
         <nuxt-link :to="routes[0].to">
           {{ siteName }}
@@ -22,15 +24,18 @@
       </div>
     </nav>
     
-    <h1>{{ siteName }}</h1>
-  </header>
+    <header>
+      <h1>{{ siteName }}</h1>
+      <p>{ description }</p>
+    </header>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'nuxt-class-component'
 
-@Component({})
+@Component
 export default class extends Vue {
   siteName = 'Compatriots Abroad'
   // The first route should be '/'
@@ -52,11 +57,14 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-header {
+div.header {
+  margin-bottom: 30px;
+  
   nav {
     display: flex;
     flex-wrap: wrap;
 
+    margin-bottom: 20px;
     background: lightgreen;
 
     ul {
@@ -67,13 +75,26 @@ header {
     .link {
       color: black;
       text-align: center;
+
+      :hover {
+        background-color: wheat;
+      }
+
+      a {
+        display: block;
+        padding: 10px;
+      }
     }
   }
-  
-  h1 {
-    font-family: 'Roboto Slab';
-    font-size: 6vw;
-    text-align: center;
+
+  header {
+    h1 {
+      font-weight: 600;
+    }
+    
+    p {
+      text-align: center;
+    }
   }
 }
 </style>

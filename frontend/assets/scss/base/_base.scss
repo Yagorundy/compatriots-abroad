@@ -1,7 +1,18 @@
-html {
-  box-sizing: border-box;
-}
-
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: 'Open Sans';
+  background-color: rgba(243, 243, 243, 0.3);
+
+  &, body, #__nuxt, #__layout {
+    height: 100%;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab';
+  text-align: center;
 }

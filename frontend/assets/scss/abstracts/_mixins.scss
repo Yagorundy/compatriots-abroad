@@ -1,0 +1,13 @@
+@import 'variables';
+
+@mixin grid-bp-iterator($breakpoints...) {
+  @if (length($breakpoints) == 0) {
+    $breakpoints: map-keys($grid-breakpoints);
+  }
+  @each $bp-name in $breakpoints {
+    $bp-value: map-get($grid-breakpoints, $bp-name);
+    @media screen and (min-width: $bp-value * 1px) {
+      @content($bp-name, $bp-value);
+    }
+  }
+}

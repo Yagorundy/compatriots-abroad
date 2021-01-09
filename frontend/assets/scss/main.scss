@@ -2,5 +2,9 @@
 
 @import 'base/reset';
 @import 'base/fonts';
-@import 'base/rwd';
 @import 'base/base';
+
+@import 'rwd/utils';
+@import 'rwd/col';
+@import 'rwd/container';
+@import 'rwd/headings';

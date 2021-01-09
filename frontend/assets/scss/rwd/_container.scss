@@ -1,0 +1,45 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+$container-max-with: (
+  $grid-bp-sm: 100%,
+  $grid-bp-md: 540px,
+  $grid-bp-lg: 720px,
+  $grid-bp-xl: 960px
+);
+
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  min-width: 100%;
+
+  @include grid-bp-iterator() using ($bp-name, $bp-value) {
+    max-width: map-get($container-max-with, $bp-name);
+  }
+}
+
+.container-fluid {
+  width: 100%;
+}
+
+$container-margin-side: (
+  $grid-bp-sm: 0,
+  $grid-bp-md: 20px,
+  $grid-bp-lg: 40px,
+  $grid-bp-xl: 60px
+);
+
+@include grid-bp-iterator() using ($bp-name, $bp-value) {
+  $margin-value: map-get($container-margin-side, $bp-name);
+  .container-spaced {
+    margin: $margin-value;
+  }
+  .container-spaced-horizontal {
+    margin-left: $margin-value;
+    margin-right: $margin-value;
+  }
+  .container-spaced-vertical {
+    margin-top: $margin-value;
+    margin-bottom: $margin-value;
+  }
+}

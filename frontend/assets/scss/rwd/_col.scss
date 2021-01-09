@@ -1,0 +1,17 @@
+@import '../abstracts/mixins';
+
+[class*="col-"] {
+  width: 100%;
+}
+
+$grid-cols: 12;
+
+@include grid-bp-iterator() using ($bp-name, $bp-value) {
+  @for $i from 1 through $grid-cols {
+    $width: (100 / ($grid-cols / $i)) * 1%;
+    .col-#{$bp-name}-#{$i} {
+      width: $width;
+      flex-basis: $width;
+    }
+  }
+}

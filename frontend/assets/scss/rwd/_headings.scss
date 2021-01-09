@@ -1,0 +1,23 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+$header-ratio: 10;
+@mixin generate-headers-font-size($base-font-size) {
+  @for $i from 1 through 6 {
+    h#{$i} {
+      font-size: ($base-font-size / 100 * (100 - ($i - 1) * $header-ratio));
+    }
+  }
+}
+
+@include generate-headers-font-size(40px);
+
+$header-font-size: (
+  $grid-bp-sm: 45px,
+  $grid-bp-md: 50px,
+  $grid-bp-lg: 55px,
+  $grid-bp-xl: 60px
+);
+@include grid-bp-iterator() using ($bp-name, $bp-value) {
+  @include generate-headers-font-size(map-get($header-font-size, $bp-name));
+}

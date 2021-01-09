@@ -1,0 +1,11 @@
+$grid-bp-sm: 'sm';
+$grid-bp-md: 'md';
+$grid-bp-lg: 'lg';
+$grid-bp-xl: 'xl';
+
+$grid-breakpoints: (
+  $grid-bp-sm: 576,
+  $grid-bp-md: 768,
+  $grid-bp-lg: 992,
+  $grid-bp-xl: 1200
+);

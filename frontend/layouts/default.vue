@@ -3,8 +3,8 @@
     <div id="app">
       <Header />
 
-      <main>
-        <Nuxt />
+      <main class="container container-fluid">
+        <nuxt />
       </main>
 
       <Footer />
@@ -21,3 +21,11 @@ export default Vue.extend({
   components: { Header, Footer }
 })
 </script>
+
+<style lang="scss" scoped>
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>
