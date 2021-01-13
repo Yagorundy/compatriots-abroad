@@ -41,6 +41,11 @@ export default class extends Vue {
   
   countries = countries
   selectedCountryCode = ''
+
+  async created() {
+    console.log(await this.$axios.$get('https://jsonplaceholder.typicode.com/todos/1', {}))
+    console.log(await this.$authService.login({ email: '', password: '' }))
+  }
 }
 </script>
 

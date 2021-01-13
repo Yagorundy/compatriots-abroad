@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from "bcryptjs";
 import { InvalidLoginError } from "../../../../common/errors/auth/invalid-login.error";
-import { IJwtDto } from "../../../../common/transfer/jwt-dto.interface";
+import { IJwtResponseDto } from "../../../../common/transfer/auth/jwt-response-dto.interface";
 import { IUserIdentity } from "../../infrastructure/mongo/users/interfaces/user-identity.interface";
 import { UserRepository } from "../../infrastructure/mongo/users/user.repository";
 import { UserLoginDto } from "./dtos/user-login.dto";
@@ -12,7 +12,7 @@ import { IJwtPayload } from "./interfaces/jwt-payload";
 export class AuthService {
     constructor(private userRepository: UserRepository, private jwtService: JwtService) { }
 
-    async login(userLoginDto: UserLoginDto): Promise<IJwtDto> {
+    async login(userLoginDto: UserLoginDto): Promise<IJwtResponseDto> {
         try {
             const identity = await this.userRepository.getIdentity(userLoginDto.email)
             if (!compareSync(userLoginDto.password, identity.passwordHash)) throw new Error('Invalid password!')
@@ -22,7 +22,7 @@ export class AuthService {
         }
     }
 
-    private createJwtResponse(identity: IUserIdentity): IJwtDto {
+    private createJwtResponse(identity: IUserIdentity): IJwtResponseDto {
         return {
             access_token: this.signToken(identity)
         }

@@ -27,10 +27,12 @@
     "types": [
       "@types/node",
       "@nuxt/types",
+      "@nuxtjs/axios",
       "jest",
       "googlemaps"
     ]
   },
+  "include": ["./", "../common"],
   "exclude": [
     "node_modules",
     ".nuxt",

@@ -19,7 +19,8 @@ export default {
         { path: '*', redirect: '/' },
         { path: '/', redirect: '/overview' }
       ])
-    }
+    },
+    middleware: ['auth-check']
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -29,6 +30,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    '~/plugins/auth-service.ts',
+    '~/plugins/axios.ts'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
