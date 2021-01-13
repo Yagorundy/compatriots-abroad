@@ -3,7 +3,7 @@ export class AppError extends Error {
     static readonly STATUS_CODE: number = 500
 
     constructor(
-        public readonly message: string,
+        readonly message: string,
         readonly parent?: AppError | Error
     ) {
         super(message)
