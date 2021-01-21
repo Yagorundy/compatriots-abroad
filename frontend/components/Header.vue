@@ -26,7 +26,6 @@
     
     <header>
       <h1>{{ siteName }}</h1>
-      <p>{ description }</p>
     </header>
   </div>
 </template>
@@ -89,10 +88,6 @@ div.header {
   header {
     h1 {
       font-weight: 600;
-    }
-    
-    p {
-      text-align: center;
     }
   }
 }
