@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common'
-import { CreateUserDto } from '../../core/users/dtos/create-user.dto'
+import { UserCreateDto } from '../../core/users/dtos/user-create.dto'
 import { UsersService } from '../../core/users/users.service'
 import { JwtGuard } from '../auth-module/jwt.guard'
 import { User } from '../auth-module/user.decorator'
@@ -10,7 +10,7 @@ export class UsersController {
     constructor(private usersService: UsersService) {}
 
     @Post('users')
-    async create(@Body() dto: CreateUserDto) {
+    async create(@Body() dto: UserCreateDto) {
         await this.usersService.createUser(dto)
     }
 

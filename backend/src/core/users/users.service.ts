@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common'
 import { hashSync } from 'bcryptjs'
 import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
 import { UserRepository } from '../../infrastructure/mongo/users/user.repository'
-import { CreateUserDto } from './dtos/create-user.dto'
+import { UserCreateDto } from './dtos/user-create.dto'
 
 @Injectable()
 export class UsersService {
     constructor(private userRepository: UserRepository, private geocodingService: GeocodingService) {}
 
-    async createUser(user: CreateUserDto) {
+    async createUser(user: UserCreateDto) {
         const location = await this.geocodingService.getLocation(user.address)
         const passwordHash = hashSync(user.password)
 

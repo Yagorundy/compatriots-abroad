@@ -38,7 +38,6 @@ import Component from 'nuxt-class-component'
 @Component
 export default class extends Vue {
   siteName = 'Compatriots Abroad'
-  // The first route should be '/'
   routes = [
     {
       to: '/',

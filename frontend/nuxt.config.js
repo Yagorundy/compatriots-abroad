@@ -30,8 +30,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/auth-service.ts',
-    '~/plugins/axios.ts'
+    '~/plugins/services.client.ts',
+    '~/plugins/axios.client.ts'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -55,8 +55,7 @@ export default {
   axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-  },
+  build: {},
 
   // Environment variables client side
   env: {

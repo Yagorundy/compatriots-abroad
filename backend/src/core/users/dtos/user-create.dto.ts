@@ -1,7 +1,7 @@
 import { IsEmail, IsString } from "class-validator"
-import { ICreateUserDto } from "../../../../../common/transfer/users/create-user-dto.interface"
+import { IUserCreateDto } from "../../../../../common/transfer/users/user-create-dto.interface"
 
-export class CreateUserDto implements ICreateUserDto {
+export class UserCreateDto implements IUserCreateDto {
     @IsString()
     firstName: string
 

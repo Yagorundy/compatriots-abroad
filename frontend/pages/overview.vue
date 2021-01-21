@@ -23,7 +23,7 @@
       </div>
 
       <div id="map-container">
-        <google-map />
+        <GoogleMap />
       </div>
     </div>
   </div>
@@ -32,7 +32,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'nuxt-class-component'
-import GoogleMap from '~/components/GoogleMap.vue'
 import countries from '~/static/countries.json'
 
 @Component
@@ -43,8 +42,7 @@ export default class extends Vue {
   selectedCountryCode = ''
 
   async created() {
-    console.log(await this.$axios.$get('https://jsonplaceholder.typicode.com/todos/1', {}))
-    console.log(await this.$authService.login({ email: '', password: '' }))
+
   }
 }
 </script>

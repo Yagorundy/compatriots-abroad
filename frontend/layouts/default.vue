@@ -4,7 +4,7 @@
       <Header />
 
       <main class="container container-fluid">
-        <nuxt />
+        <Nuxt />
       </main>
 
       <Footer />

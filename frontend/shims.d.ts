@@ -1,20 +1,24 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import Vue from 'vue'
-import { IAuthService } from './contracts/auth-service.interface'
+import { AuthService } from './services/auth.service'
+import { JwtService } from './services/jwt.service'
 
 declare module '*.vue' {
   export default Vue
 }
 
+interface Services {
+  $jwtService: JwtService
+  $authService: AuthService
+}
+
 declare module 'vue/types/vue' {
-  interface Vue {
-    $authService: IAuthService
+  interface Vue extends Services {
   }
 }
 
 declare module '@nuxt/types' {
-  interface Context {
+  interface Context extends Services {
     $axios: NuxtAxiosInstance
-    $authService: IAuthService
   }
 }
