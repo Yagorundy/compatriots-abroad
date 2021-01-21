@@ -6,10 +6,14 @@ import { AppErrorFilter } from './api/filters/app-error.filter'
 import { AppModule } from './app.module'
 import { AppConfigService } from './config/app/app-config.service'
 import { ClassValidatorError } from './core/errors/class-validator.error'
+import * as helmet from 'helmet';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
+    const appConfigService = app.get(AppConfigService)
 
+    app.use(helmet())
+    app.enableCors({ origin: appConfigService.allowedOrigin })
     app.useGlobalFilters(new AppErrorFilter())
     app.useGlobalPipes(new ValidationPipe({
         transform: true,
@@ -20,7 +24,6 @@ async function bootstrap() {
         }
     }))
 
-    const appConfigService = app.get(AppConfigService)
     await app.listen(appConfigService.port)
 }
 bootstrap()
