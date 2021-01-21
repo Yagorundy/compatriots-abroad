@@ -19,8 +19,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'nuxt-class-component'
+import { Component, Vue } from 'nuxt-property-decorator'
 import countries from '~/static/countries.json'
 import { Loader } from '@googlemaps/js-api-loader'
 

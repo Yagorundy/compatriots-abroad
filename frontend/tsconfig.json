@@ -25,6 +25,7 @@
       ]
     },
     "types": [
+      "./shims.d.ts",
       "@types/node",
       "@nuxt/types",
       "@nuxtjs/axios",

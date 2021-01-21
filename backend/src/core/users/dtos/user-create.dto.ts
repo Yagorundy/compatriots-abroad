@@ -8,12 +8,12 @@ export class UserCreateDto implements IUserCreateDto {
     @IsString()
     lastName: string
 
+    @IsString()
+    address: string
+
     @IsEmail()
     email: string
 
     @IsString()
     password: string
-
-    @IsString()
-    address: string
 }

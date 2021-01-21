@@ -5,10 +5,9 @@ const p: Plugin = ({ $axios, $jwtService }) => {
     config.headers.Authorization = $jwtService.getToken()
     return config;
   })
-  $axios.interceptors.response.use(undefined, error => {
-    error = error.toJSON()
-    window.alert(error.message)
-  })
+  // $axios.interceptors.response.use(undefined, error => {
+  //   // TODO parse error
+  // })
 }
 
 export default p;

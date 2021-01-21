@@ -1,5 +1,5 @@
 <template>
-  <div id="overview">
+  <div id="overview" class="container-fluid">
     <header>
       <h6>The website that connects you with your people! Sign up <nuxt-link to="/signup">here</nuxt-link> and find people and groups abroad.</h6>
       <h4>Hi {{ username }}!</h4>
@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'nuxt-class-component'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class extends Vue {

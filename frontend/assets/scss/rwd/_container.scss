@@ -11,7 +11,6 @@ $container-max-with: (
 .container {
   margin: 0 auto;
   padding: 0 15px;
-  min-width: 100%;
 
   @include grid-bp-iterator() using ($bp-name, $bp-value) {
     max-width: map-get($container-max-with, $bp-name);
@@ -19,7 +18,7 @@ $container-max-with: (
 }
 
 .container-fluid {
-  width: 100%;
+  min-width: 100%;
 }
 
 $container-margin-side: (
