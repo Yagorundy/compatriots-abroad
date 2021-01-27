@@ -33,7 +33,7 @@ export default class extends Vue {
 
   beforeCreate() {
     if (process.client) {
-      const apiKey = process.env.googleMapsApiKey
+      const apiKey = process.env.GOOGLE_MAPS_API_KEY
       if (!apiKey) throw new Error('Google maps api key is not present!');
       this.loader = new Loader({ apiKey,  });
 
@@ -56,7 +56,7 @@ export default class extends Vue {
 <style lang="scss" scoped>
 #map-container {
   position: relative;
-  height: 30em;
+  height: 65vh;
 
   #map-menu {
     position: absolute;

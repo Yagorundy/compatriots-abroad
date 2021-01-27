@@ -12,18 +12,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import { AuthMixin } from '@/mixins/auth.mixin'
 
 @Component
-export default class extends Vue {
+export default class extends mixins(AuthMixin) {
   username = '{username}'
 
-  get isAuthorized() {
-    return !!this.$jwtService.getToken()
-  }
-
   async created() {
-
+    this.username = this.$jwtService.getTokenPayload()?.firstName || 'undefined'
   }
 }
 </script>

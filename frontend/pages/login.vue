@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent="logIn">
+    <form @submit.prevent="login">
       <FormGroup label="Email">
         <input type="email" v-model="userLoginData.email" />
       </FormGroup>
@@ -24,10 +24,10 @@ export default class extends Vue {
     password: ''
   }
 
-  async logIn() {
+  async login() {
     const { access_token } = await this.$authService.login(this.userLoginData)
     this.$jwtService.setToken(access_token)
-    this.$router.push('login')
+    this.$router.push('/')
   }
 }
 </script>

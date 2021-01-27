@@ -1,3 +1,5 @@
+import { IJwtPayload } from "~/../common/transfer/auth/jwt-payload.interface";
+
 export class JwtService {
   private static readonly JWT_KEY = 'token';
 
@@ -13,8 +15,11 @@ export class JwtService {
     window.localStorage.removeItem(JwtService.JWT_KEY)
   }
 
-  getTokenPayload() {
+  getTokenPayload(): IJwtPayload | undefined {
     const token = this.getToken()
-    if (token) return btoa(token)
+    if (token) {
+      const [,payload] = token.split('.')
+      return JSON.parse(atob(payload))
+    }
   }
 }

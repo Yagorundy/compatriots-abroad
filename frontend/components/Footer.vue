@@ -8,7 +8,7 @@
 footer {
   margin-top: auto;
   width: 100%;
-  padding: 5px;
+  padding: 1vh 0;
 
   background: lightgreen;
   text-align: center;

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <nav>
+    <nav v-if="isAuthorized">
       <!-- TODO: add icons -->
       <!-- TODO: add curves -->
       <div class="col-md-3 col-lg-2 link">
@@ -24,17 +24,18 @@
       </div>
     </nav>
     
-    <header>
+    <header v-else>
       <h1>{{ siteName }}</h1>
     </header>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import { AuthMixin } from '~/mixins/auth.mixin'
 
 @Component
-export default class extends Vue {
+export default class extends mixins(AuthMixin) {
   siteName = 'Compatriots Abroad'
   routes = [
     {
@@ -85,6 +86,8 @@ div.header {
   }
 
   header {
+    margin-top: 2vh;
+
     h1 {
       font-weight: 600;
     }
