@@ -12,6 +12,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule)
     const appConfigService = app.get(AppConfigService)
 
+    app.setGlobalPrefix(appConfigService.prefix)
     app.use(helmet())
     app.enableCors({ origin: appConfigService.allowedOrigin })
     app.useGlobalFilters(new AppErrorFilter())

@@ -11,6 +11,10 @@ import { IUserIdentity } from './interfaces/user-identity.interface'
 export class UserRepository {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+    async check(id: string) {
+        return await this.userModel.exists({ id });
+    }
+
     async getIdentity(email: string): Promise<IUserIdentity> {
         try {
             const data = await this.userModel.findOne({ email }, createProjection<IUser>('passwordHash')).orFail()

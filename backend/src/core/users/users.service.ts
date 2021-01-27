@@ -8,6 +8,10 @@ import { UserCreateDto } from './dtos/user-create.dto'
 export class UsersService {
     constructor(private userRepository: UserRepository, private geocodingService: GeocodingService) {}
 
+    async checkUser(id: string) {
+        return await this.userRepository.check(id);
+    }
+
     async createUser(user: UserCreateDto) {
         const location = await this.geocodingService.getLocation(user.address)
         const passwordHash = hashSync(user.password)

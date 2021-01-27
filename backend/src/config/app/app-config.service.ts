@@ -9,6 +9,10 @@ export class AppConfigService {
         return this.configService.get<number>('PORT')
     }
 
+    get prefix() {
+        return this.configService.get<string>('PREFIX', '/api')
+    }
+
     get allowedOrigin() {
         return this.configService.get<string>('ALLOWED_ORIGIN')
     }
