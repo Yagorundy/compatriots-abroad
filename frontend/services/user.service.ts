@@ -5,6 +5,6 @@ export class UserService {
   constructor(private axios: NuxtAxiosInstance) { }
 
   create(data: IUserCreateDto) {
-    return this.axios.$post('http://localhost:3000/users', data)
+    return this.axios.$post('http://localhost:3000/api/users', data)
   }
 }

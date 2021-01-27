@@ -19,8 +19,7 @@ export default {
         { path: '*', redirect: '/' },
         { path: '/', redirect: '/overview' }
       ])
-    },
-    middleware: ['auth-check']
+    }
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)

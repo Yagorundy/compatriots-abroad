@@ -1,8 +1,8 @@
 <template>
   <div id="overview" class="container-fluid">
     <header>
-      <h6>The website that connects you with your people! Sign up <nuxt-link to="/signup">here</nuxt-link> and find people and groups abroad.</h6>
-      <h4>Hi {{ username }}!</h4>
+      <h6 v-if="!isAuthorized">The website that connects you with your people! <nuxt-link to="/signup">Sign up</nuxt-link> or <nuxt-link to="/login">log in</nuxt-link> and find people and groups abroad.</h6>
+      <h4 v-else>Hi {{ username }}!</h4>
     </header>
     
     <main class="container-spaced-horizontal">
@@ -17,6 +17,10 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component
 export default class extends Vue {
   username = '{username}'
+
+  get isAuthorized() {
+    return !!this.$jwtService.getToken()
+  }
 
   async created() {
 

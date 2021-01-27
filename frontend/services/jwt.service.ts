@@ -9,6 +9,10 @@ export class JwtService {
     return window.localStorage.setItem(JwtService.JWT_KEY, token)
   }
 
+  clearToken() {
+    window.localStorage.removeItem(JwtService.JWT_KEY)
+  }
+
   getTokenPayload() {
     const token = this.getToken()
     if (token) return btoa(token)
