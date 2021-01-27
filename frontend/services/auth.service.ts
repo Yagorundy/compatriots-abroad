@@ -6,6 +6,6 @@ export class AuthService {
   constructor(private axios: NuxtAxiosInstance) { }
 
   login(data: IUserLoginDto): Promise<IJwtResponseDto> {
-    return this.axios.$post('http://localhost:3000/api/auth/login', data)
+    return this.axios.$post('/auth/login', data)
   }
 }

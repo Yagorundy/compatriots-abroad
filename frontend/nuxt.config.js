@@ -48,7 +48,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -57,8 +58,13 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
 
+  proxy: {
+    [process.env.BACKEND_PREFIX]: process.env.BACKEND_URL
+  },
+
   // Environment variables client side
   env: {
-    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+    BACKEND_PREFIX: process.env.BACKEND_PREFIX,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
   }
 }
