@@ -21,11 +21,15 @@ export class UsersService {
             lastName: user.lastName,
             email: user.email,
             passwordHash,
-            countryOfOrigin: '',
+            countryOfOrigin: user.countryOfOrigin,
             address: user.address,
             country: location.country,
             lat: location.lat,
             lng: location.lng
         })
+    }
+
+    async getUsersLocation(countryOfOriginCode: string) {
+        return await this.userRepository.getUsersLocation(countryOfOriginCode)
     }
 }

@@ -9,4 +9,8 @@ export class GroupsService {
     async create(group: IGroup) {
         await this.groupRepository.create(group);
     }
+
+    async getGroupsLocation(countryOfOriginCode: string) {
+        // TODO
+    }
 }

@@ -20,8 +20,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import countries from '~/static/countries.json'
 import { Loader } from '@googlemaps/js-api-loader'
+import { countries } from '~/../common/constants/countries.constant'
 
 @Component
 export default class extends Vue {

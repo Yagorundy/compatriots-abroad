@@ -5,21 +5,22 @@ import { JwtGuard } from '../auth-module/jwt.guard'
 import { User } from '../auth-module/user.decorator'
 import { IUser } from '../auth-module/user.interface'
 
-@Controller()
+@Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
-    @Post('users')
+    @Post()
     async create(@Body() dto: UserCreateDto) {
         await this.usersService.createUser(dto)
     }
 
-    @Get('users')
-    async get(@Param() id: string) {
+    @Get(':id')
+    async get(@Param('id') id: string) {
+        console.log(id);
         // TODO
     }
 
-    @Delete('user')
+    @Delete()
     @UseGuards(JwtGuard)
     async delete(@User() user: IUser) {
         console.log('DELETE user ' + user.id);

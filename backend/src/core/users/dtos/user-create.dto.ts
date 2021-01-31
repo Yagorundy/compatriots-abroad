@@ -9,6 +9,9 @@ export class UserCreateDto implements IUserCreateDto {
     lastName: string
 
     @IsString()
+    countryOfOrigin: string
+
+    @IsString()
     address: string
 
     @IsEmail()
