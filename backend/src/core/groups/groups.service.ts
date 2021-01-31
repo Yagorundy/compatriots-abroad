@@ -12,5 +12,6 @@ export class GroupsService {
 
     async getGroupsLocation(countryOfOriginCode: string) {
         // TODO
+        return []
     }
 }

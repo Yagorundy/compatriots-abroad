@@ -1,18 +1,7 @@
 <template>
   <div id="map-container">
     <div id="map-menu">
-      <select
-        id="country-selector"
-        v-model="selectedCountryCode"
-      >
-        <option disabled :selected="!selectedCountryCode" value>Choose a country</option>
-        <option
-          :key="index"
-          v-for="(country, index) in countries"
-          :value="country.code"
-          :selected="selectedCountryCode === country.code"
-        >{{ country.name }}</option>
-      </select>
+      <CountrySelector v-model="selectedCountryCode" />
     </div>
     <div id="map" ref="map"></div>
   </div>
