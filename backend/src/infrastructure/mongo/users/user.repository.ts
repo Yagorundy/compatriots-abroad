@@ -32,10 +32,11 @@ export class UserRepository {
 
     async getPublicUser(id: string): Promise<IUserPublic> {
         try {
-            const data = await this.userModel.findById(id, createProjection<IUser>(false, 'firstName', 'lastName')).orFail()
+            const data = await this.userModel.findById(id, createProjection<IUser>(false, 'firstName', 'lastName', 'countryOfOrigin')).orFail()
             return {
                 firstName: data.firstName,
-                lastName: data.lastName
+                lastName: data.lastName,
+                countryOfOrigin: data.countryOfOrigin
             }
         } catch (err) {
             throw new NotFoundError(`Could not find user with id ${id}!`, err)

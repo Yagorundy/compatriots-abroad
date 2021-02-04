@@ -2,19 +2,22 @@
   <div class="container">
     <form @submit.prevent="signUp">
       <FormGroup label="Email">
-        <input type="email" v-model="userCreateData.email" />
+        <input type="email" v-model="createUserData.email" />
       </FormGroup>
       <FormGroup label="First Name">
-        <input v-model="userCreateData.firstName" />
+        <input v-model="createUserData.firstName" />
       </FormGroup>
       <FormGroup label="Last Name">
-        <input v-model="userCreateData.lastName" />
+        <input v-model="createUserData.lastName" />
+      </FormGroup>
+      <FormGroup label="Country of origin">
+        <CountrySelector v-model="createUserData.countryOfOrigin" />
       </FormGroup>
       <FormGroup label="Address">
-        <input v-model="userCreateData.address" />
+        <input v-model="createUserData.address" />
       </FormGroup>
       <FormGroup label="Password">
-        <input v-model="userCreateData.password" />
+        <input v-model="createUserData.password" />
       </FormGroup>
       <FormGroup label="Confirm Password">
         <input v-model="confirmPassword" />
@@ -31,8 +34,9 @@ import { IUserCreateDto } from '~/../common/transfer/users/user-create-dto.inter
 
 @Component
 export default class extends Vue {
-  userCreateData: IUserCreateDto = {
+  createUserData: IUserCreateDto = {
     address: '',
+    countryOfOrigin: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -41,7 +45,7 @@ export default class extends Vue {
   confirmPassword = ''
 
   async signUp() {
-    await this.$userService.create(this.userCreateData)
+    await this.$usersService.create(this.createUserData)
     this.$router.push('login')
   }
 }

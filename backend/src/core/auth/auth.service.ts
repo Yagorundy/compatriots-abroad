@@ -18,7 +18,7 @@ export class AuthService {
             const identity = await this.userRepository.getIdentity(userLoginDto.email)
             if (!compareSync(userLoginDto.password, identity.passwordHash)) throw new Error('Invalid password!')
             const publicUser = await this.userRepository.getPublicUser(identity.id);
-            return this.createJwtResponse(identity, publicUser);
+            return this.createJwtResponse(identity, publicUser)
         } catch (err) {
             throw new InvalidLoginError(`Wrong email or password!`, err)
         }

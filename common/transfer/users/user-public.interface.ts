@@ -1,4 +1,5 @@
 export interface IUserPublic {
     firstName: string;
     lastName: string;
+    countryOfOrigin: string;
 }

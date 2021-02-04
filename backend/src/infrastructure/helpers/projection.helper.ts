@@ -3,6 +3,6 @@ export function createProjection<T>(includeId: boolean, ...fields: (keyof T)[]) 
         result[current] = 1
         return result
     }, {} as any)
-    if (!result['_id']) result['_id'] = 0
+    if (!includeId) result['_id'] = 0
     return result
 }
