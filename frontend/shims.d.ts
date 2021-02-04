@@ -2,7 +2,8 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import Vue from 'vue'
 import { AuthService } from './services/auth.service'
 import { JwtService } from './services/jwt.service'
-import { UserService } from './services/user.service'
+import { LocationsService } from './services/locations.service'
+import { UsersService } from './services/users.service'
 
 declare module '*.vue' {
   export default Vue
@@ -11,7 +12,8 @@ declare module '*.vue' {
 interface Services {
   $jwtService: JwtService
   $authService: AuthService
-  $userService: UserService
+  $usersService: UsersService
+  $locationsService: LocationsService
 }
 
 declare module 'vue/types/vue' {
