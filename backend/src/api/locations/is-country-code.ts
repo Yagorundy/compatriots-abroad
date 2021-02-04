@@ -1,10 +1,10 @@
 import { registerDecorator, ValidationOptions, ValidationArguments, ValidatorConstraintInterface, ValidatorConstraint } from 'class-validator';
-import { countryNamesByCode } from '../../../../common/constants/countries.constant';
+import { countriesByCode } from '../../../../common/constants/countries.constant';
 
 @ValidatorConstraint()
 class IsCountryCodeConstraint implements ValidatorConstraintInterface {
     validate(countryCode: any, _args: ValidationArguments) {
-        return typeof countryCode === 'string' && !!countryNamesByCode[countryCode]
+        return typeof countryCode === 'string' && !!countriesByCode[countryCode]
     }
 }
 
