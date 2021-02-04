@@ -4,6 +4,7 @@
       class="input"
       placeholder="Select a country"
       v-model="countryName"
+      :disabled="disabled"
       :readonly="!showDropdown"
       @input="showDropdown = true; useInputAsFilter = true"
       @click="onInputClicked"
@@ -24,8 +25,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { countries } from '~/../common/constants/countries.constant'
+import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
+import { countries, countriesByCode } from '~/../common/constants/countries.constant'
 
 @Component
 export default class extends Vue {  
@@ -35,6 +36,11 @@ export default class extends Vue {
   countryName = ''
   showDropdown = false
   useInputAsFilter = false
+
+  @Watch('value', { immediate: true })
+  onValueUpdated() {
+    this.countryName = countriesByCode[this.value].name
+  }
 
   get countries() {
     if (this.useInputAsFilter) {
@@ -54,7 +60,6 @@ export default class extends Vue {
   }
 
   selectCountry(country: typeof countries[number]) {
-    this.countryName = country.name
     this.showDropdown = false
     if (this.value === country.code) return
     this.$emit('input', country.code)
@@ -63,26 +68,24 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-$white: white;
-$default-dark: red;
-$main: green;
-
+$input-width: 250px;
 
 .country-selector {
   .input {
     cursor: pointer;
     padding: 2px 4px;
+    text-align: center;
+    width: $input-width;
   }
 
   .dropdown {
     position: absolute;
-    width: 90%;
+    width: $input-width;
     max-height: 200px;
     overflow-x: auto;
     list-style-type: none;
     padding: 10px 20px 10px 0;
-
-    background-color: $white;
+    background-color: white;
     box-shadow: 0 2px 20px 9px rgba(31, 31, 31, 0.04);
     border: none;
 
@@ -90,7 +93,7 @@ $main: green;
       width: 100%;
       cursor: pointer;
       font-size: 14px;
-      color: $default-dark;
+      color: red;
       text-align: left;
       background: transparent;
       border: none;
@@ -106,9 +109,9 @@ $main: green;
 
       &.selected {
         padding-left: 16px;
-        color: $main;
+        color: green;
         background-color: #f8f9fa;
-        border-left: 4px solid $main;
+        border-left: 4px solid white;
       }
       
       &::after {
