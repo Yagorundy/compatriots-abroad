@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     TODO
-    Add group view and edit (if group owner) 
+    Show my groups and groups i like/am-part-of
+    Add button to search groups and redirect to the search page
   </div>
 </template>
 

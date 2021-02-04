@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     TODO
-    Add group view and edit (if group owner) 
+    Add edit profile functionalities
+    Add logout
   </div>
 </template>
 
