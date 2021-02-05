@@ -10,8 +10,8 @@ export class LocationsController {
     @Get()
     async get(@Query() { target, countryOfOrigin }: GetLocationsDto) {
         switch (target) {
-            case 'users': return await this.usersService.getUsersLocation(countryOfOrigin)
-            case 'groups': return await this.groupsService.getGroupsLocation(countryOfOrigin)
+            case 'users': return await this.usersService.getUserLocations(countryOfOrigin)
+            case 'groups': return await this.groupsService.getGroupLocations(countryOfOrigin)
         }
     }
 }

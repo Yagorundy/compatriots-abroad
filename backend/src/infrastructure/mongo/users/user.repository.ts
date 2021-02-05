@@ -43,12 +43,12 @@ export class UserRepository {
         }
     }
 
-    async getUsersLocation(countryOfOriginCode: string): Promise<ILocation[]> {
+    async getUserLocations(countryOfOriginCode: string): Promise<ILocation[]> {
         try {
             return await this.userModel.find({ countryOfOrigin: countryOfOriginCode }, createProjection<ILocation>(false, 'lat', 'lng')).orFail()
         } catch (err) {
             if (err.name === 'DocumentNotFoundError') return []
-            throw new AppError(`Error querying users location for country of origin ${countryOfOriginCode}!`, err)
+            throw new AppError(`Error querying user location for country of origin ${countryOfOriginCode}!`, err)
         }
     }
 

@@ -6,8 +6,8 @@ export interface IUser {
     passwordHash: string
 
     countryOfOrigin: string
-    country: string
     address: string
+    country: string
     lat: number
     lng: number
 }

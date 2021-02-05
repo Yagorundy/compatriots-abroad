@@ -14,31 +14,41 @@ import { countries, countriesByCode } from '~/../common/constants/countries.cons
 import { ILocation } from '~/../common/transfer/locations/location.interface'
 import { AuthMixin } from '~/mixins/auth.mixin'
 
+type MarkerType = 'user' | 'group'
+
 @Component
 export default class extends mixins(AuthMixin) {
   countries = countries
   selectedCountryCode = ''
   areMarkersLoading = false
-  markers: google.maps.Marker[] = []
+  markers: { [key in MarkerType]: google.maps.Marker[] } = { user: [], group: [] }
 
   loader!: Loader
+  initMapPromise!: Promise<any>
   map?: google.maps.Map
+
+  async setMarkers(type: MarkerType) {
+    this.markers[type].forEach(m => m.setMap(null))
+    const locations = await this.$locationsService.getLocations(this.selectedCountryCode, type === 'user' ? 'users' : 'groups')
+    this.markers[type] = locations.map(loc => new google.maps.Marker({ position: loc, map: this.map }))
+  }
 
   @Watch('selectedCountryCode')
   async onSelectedCountryCodeChanged() {
     this.areMarkersLoading = true
-    this.markers.forEach(m => m.setMap(null))
-    const locations = await this.$locationsService.getUserLocations(this.selectedCountryCode)
     this.map?.setCenter(countriesByCode[this.selectedCountryCode])
-    this.markers = locations.map(loc => new google.maps.Marker({ position: loc, map: this.map }))
+    await Promise.all([
+      this.setMarkers('user'),
+      this.setMarkers('group')
+    ])    
     this.areMarkersLoading = false
   }
 
   async created() {
-    const initMapPromise = this.initGoogleMap()
+    this.initMapPromise = this.initGoogleMap()
     try {
       const userLocation = await this.getUserLocation()
-      await initMapPromise
+      await this.initMapPromise
       if (userLocation) {
         this.map?.setCenter(userLocation)
       }
@@ -48,21 +58,19 @@ export default class extends mixins(AuthMixin) {
   }
 
   async initGoogleMap() {
-    if (process.client) {
-      const apiKey = process.env.GOOGLE_MAPS_API_KEY
-      if (!apiKey) throw new Error('Google maps api key is not present!')
-      this.loader = new Loader({ apiKey })
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY
+    if (!apiKey) throw new Error('Google maps api key is not present!')
+    this.loader = new Loader({ apiKey })
 
-      this.loader.load()
-        .then(() => {
-          this.map = new google.maps.Map(this.$refs.map as HTMLDivElement, {
-            fullscreenControl: false,
-            mapTypeControl: false,
-            center: { lat: 54.5260, lng: 15.2551 },
-            zoom: 4
-          })
+    this.loader.load()
+      .then(() => {
+        this.map = new google.maps.Map(this.$refs.map as HTMLDivElement, {
+          fullscreenControl: false,
+          mapTypeControl: false,
+          center: { lat: 54.5260, lng: 15.2551 },
+          zoom: 4
         })
-    }
+      })
   }
 
   async getUserLocation(): Promise<ILocation | undefined> {

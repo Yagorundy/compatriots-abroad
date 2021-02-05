@@ -19,7 +19,6 @@ export class GeocodingService {
         const coords = result.geometry.location;
 
         return {
-            country: country.long_name,
             countryCode: country.short_name,
             lat: coords.lat,
             lng: coords.lng

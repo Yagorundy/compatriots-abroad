@@ -12,24 +12,24 @@ export class UsersService {
         return await this.userRepository.check(id);
     }
 
-    async createUser(user: UserCreateDto) {
-        const location = await this.geocodingService.getLocation(user.address)
-        const passwordHash = hashSync(user.password)
+    async createUser(userCreateDto: UserCreateDto) {
+        const location = await this.geocodingService.getLocation(userCreateDto.address)
+        const passwordHash = hashSync(userCreateDto.password)
 
         await this.userRepository.create({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
+            firstName: userCreateDto.firstName,
+            lastName: userCreateDto.lastName,
+            email: userCreateDto.email,
             passwordHash,
-            countryOfOrigin: user.countryOfOrigin,
-            address: user.address,
-            country: location.country,
+            countryOfOrigin: userCreateDto.countryOfOrigin,
+            address: userCreateDto.address,
+            country: location.countryCode,
             lat: location.lat,
             lng: location.lng
         })
     }
 
-    async getUsersLocation(countryOfOriginCode: string) {
-        return await this.userRepository.getUsersLocation(countryOfOriginCode)
+    async getUserLocations(countryOfOriginCode: string) {
+        return await this.userRepository.getUserLocations(countryOfOriginCode)
     }
 }

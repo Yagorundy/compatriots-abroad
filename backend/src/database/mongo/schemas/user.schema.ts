@@ -22,10 +22,10 @@ export class User implements IUser {
     countryOfOrigin: string
 
     @Prop()
-    country: string
+    address: string
 
     @Prop()
-    address: string
+    country: string
 
     @Prop()
     lat: number

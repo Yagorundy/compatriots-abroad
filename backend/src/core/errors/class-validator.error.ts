@@ -6,6 +6,12 @@ export class ClassValidatorError extends Error {
     }
 
     get message() {
-        return this.errors.join('')
+        return this.errors.map(e => {
+            try {
+                return e.toString()
+            } catch (_) {
+                return ''
+            }
+        }).join('')
     }
 }
