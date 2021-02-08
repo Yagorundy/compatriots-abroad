@@ -1,17 +1,28 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { GroupsService } from '../../core/groups/groups.service'
 import { UsersService } from '../../core/users/users.service'
-import { GetLocationsDto } from './get-locations-query.dto'
+import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
+import { LocationDto } from '../../core/locations/location.dto'
+import { GetLocationsDto } from '../../core/locations/get-locations-query.dto'
 
-@Controller('locations')
+@Controller()
 export class LocationsController {
-    constructor(private usersService: UsersService, private groupsService: GroupsService) {}
+    constructor(
+        private usersService: UsersService,
+        private groupsService: GroupsService,
+        private geocodingService: GeocodingService
+    ) {}
 
-    @Get()
-    async get(@Query() { target, countryOfOrigin }: GetLocationsDto) {
+    @Get('locations')
+    async getLocations(@Query() { target, countryOfOrigin }: GetLocationsDto) {
         switch (target) {
             case 'users': return await this.usersService.getUserLocations(countryOfOrigin)
             case 'groups': return await this.groupsService.getGroupLocations(countryOfOrigin)
         }
+    }
+
+    @Get('country-code')
+    async getCountryCode(@Query() location: LocationDto) {
+        return await this.geocodingService.getCountryCodeByLocation(location)
     }
 }

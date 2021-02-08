@@ -39,7 +39,10 @@ export default class extends Vue {
 
   @Watch('value', { immediate: true })
   onValueUpdated() {
-    this.countryName = countriesByCode[this.value].name
+    const country = countriesByCode[this.value]
+    if (country) {
+      this.countryName = country.name
+    }
   }
 
   get countries() {

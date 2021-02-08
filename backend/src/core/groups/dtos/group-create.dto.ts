@@ -1,6 +1,6 @@
 import { IsString } from "class-validator";
 import { IGroupCreateDto } from "../../../../../common/transfer/groups/group-create-dto.interface";
-import { IsCountryCode } from "../../../api/locations/is-country-code";
+import { IsCountryCode } from "../../validators/is-country-code";
 
 export class GroupCreateDto implements IGroupCreateDto {
     @IsString()

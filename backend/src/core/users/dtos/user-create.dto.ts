@@ -1,6 +1,6 @@
 import { IsEmail, IsString } from "class-validator"
 import { IUserCreateDto } from "../../../../../common/transfer/users/user-create-dto.interface"
-import { IsCountryCode } from "../../../api/locations/is-country-code"
+import { IsCountryCode } from "../../validators/is-country-code"
 
 export class UserCreateDto implements IUserCreateDto {
     @IsString()

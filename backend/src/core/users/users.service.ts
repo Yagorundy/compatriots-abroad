@@ -13,7 +13,7 @@ export class UsersService {
     }
 
     async createUser(userCreateDto: UserCreateDto) {
-        const location = await this.geocodingService.getLocation(userCreateDto.address)
+        const location = await this.geocodingService.getLocationByAddress(userCreateDto.address)
         const passwordHash = hashSync(userCreateDto.password)
 
         await this.userRepository.create({

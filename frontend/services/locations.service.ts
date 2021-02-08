@@ -20,4 +20,8 @@ export class LocationsService {
     }
     return this.cache[target][countryCode]
   }
+
+  async getCountryCodeByLocation(location: ILocation): Promise<string> {
+    return await this.axios.$get('/country-code', { params: location })
+  }
 }

@@ -45,12 +45,16 @@ export default class extends mixins(AuthMixin) {
   }
 
   async created() {
-    this.initMapPromise = this.initGoogleMap()
     try {
-      const userLocation = await this.getUserLocation()
-      await this.initMapPromise
-      if (userLocation) {
-        this.map?.setCenter(userLocation)
+      const [, userCountryCode] = await Promise.all([
+        this.initGoogleMap(),
+        this.getUserCountryCode()
+      ])
+      if (userCountryCode) {
+        const userLocation = countriesByCode[userCountryCode]
+        if (userLocation) {
+          this.selectedCountryCode = userCountryCode
+        }
       }
     } catch (err) {
       console.log(err)
@@ -62,32 +66,30 @@ export default class extends mixins(AuthMixin) {
     if (!apiKey) throw new Error('Google maps api key is not present!')
     this.loader = new Loader({ apiKey })
 
-    this.loader.load()
-      .then(() => {
-        this.map = new google.maps.Map(this.$refs.map as HTMLDivElement, {
-          fullscreenControl: false,
-          mapTypeControl: false,
-          center: { lat: 54.5260, lng: 15.2551 },
-          zoom: 4
-        })
-      })
+    await this.loader.load()
+    this.map = new google.maps.Map(this.$refs.map as HTMLDivElement, {
+      fullscreenControl: false,
+      mapTypeControl: false,
+      center: { lat: 54.5260, lng: 15.2551 },
+      zoom: 4
+    })
   }
 
-  async getUserLocation(): Promise<ILocation | undefined> {
+  async getUserCountryCode(): Promise<string | undefined> {
+    let countryCode: string | undefined
     if (this.isAuthorized) {
-      const countryOfOrigin = this.$jwtService.getTokenPayload()?.countryOfOrigin
-      if (countryOfOrigin) {
-        this.selectedCountryCode = countryOfOrigin
-        return countriesByCode[countryOfOrigin]
-      }
-    } else if (navigator.geolocation) {
-      return new Promise<ILocation>((res, rej) =>
+      countryCode = this.$jwtService.getTokenPayload()?.countryOfOrigin
+    }
+    if (!countryCode && navigator.geolocation) {
+      const location = await new Promise<ILocation>((res, rej) =>
         navigator.geolocation.getCurrentPosition(
           position => res({ lat: position.coords.latitude, lng: position.coords.longitude }),
-          rej,
+          rej
         )
       )
+      countryCode = await this.$locationsService.getCountryCodeByLocation(location)
     }
+    return countryCode
   }
 }
 </script>

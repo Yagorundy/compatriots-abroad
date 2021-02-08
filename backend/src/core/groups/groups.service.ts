@@ -8,7 +8,7 @@ export class GroupsService {
     constructor(private groupRepository: GroupRepository, private geocodingService: GeocodingService) { }
 
     async create(creatorId: string, groupCreateDto: IGroupCreateDto) {
-        const location = await this.geocodingService.getLocation(groupCreateDto.address)
+        const location = await this.geocodingService.getLocationByAddress(groupCreateDto.address)
         await this.groupRepository.create(creatorId, {
             name: groupCreateDto.name,
             description: groupCreateDto.description,
