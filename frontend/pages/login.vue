@@ -26,7 +26,7 @@ export default class extends Vue {
 
   async login() {
     const { access_token } = await this.$authService.login(this.userLoginData)
-    this.$jwtService.setToken(access_token)
+    this.$jwtService.token = access_token
     this.$router.push('/')
   }
 }

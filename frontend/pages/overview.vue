@@ -13,14 +13,14 @@
 
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
-import { AuthMixin } from '@/mixins/auth.mixin'
+import { UserMixin } from '~/mixins/user.mixin'
 
 @Component
-export default class extends mixins(AuthMixin) {
+export default class extends mixins(UserMixin) {
   username = '{username}'
 
   async created() {
-    this.username = this.$jwtService.getTokenPayload()?.firstName || 'undefined'
+    this.username = this.$jwtService.tokenPayload?.firstName || 'undefined'
   }
 }
 </script>

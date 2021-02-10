@@ -12,12 +12,12 @@ import { Component, mixins, Watch } from 'nuxt-property-decorator'
 import { Loader } from '@googlemaps/js-api-loader'
 import { countries, countriesByCode } from '~/../common/constants/countries.constant'
 import { ILocation } from '~/../common/transfer/locations/location.interface'
-import { AuthMixin } from '~/mixins/auth.mixin'
+import { UserMixin } from '~/mixins/user.mixin'
 
 type MarkerType = 'user' | 'group'
 
 @Component
-export default class extends mixins(AuthMixin) {
+export default class extends mixins(UserMixin) {
   countries = countries
   selectedCountryCode = ''
   areMarkersLoading = false
@@ -78,7 +78,7 @@ export default class extends mixins(AuthMixin) {
   async getUserCountryCode(): Promise<string | undefined> {
     let countryCode: string | undefined
     if (this.isAuthorized) {
-      countryCode = this.$jwtService.getTokenPayload()?.countryOfOrigin
+      countryCode = this.$jwtService.tokenPayload?.countryOfOrigin
     }
     if (!countryCode && navigator.geolocation) {
       const location = await new Promise<ILocation>((res, rej) =>

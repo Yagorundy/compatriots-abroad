@@ -3,12 +3,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 
 @Component
-export default class extends Vue {
+export default class extends mixins(AuthorizeMixin) {
   async created() {
-    this.$jwtService.clearToken()
+    this.$jwtService.token = null
     this.$router.push('login')
   }
 }

@@ -32,10 +32,10 @@
 
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
-import { AuthMixin } from '~/mixins/auth.mixin'
+import { UserMixin } from '~/mixins/user.mixin'
 
 @Component
-export default class extends mixins(AuthMixin) {
+export default class extends mixins(UserMixin) {
   siteName = 'Compatriots Abroad'
   routes = [
     {
