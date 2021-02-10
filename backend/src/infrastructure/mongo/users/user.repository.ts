@@ -4,6 +4,7 @@ import { Model } from 'mongoose'
 import { AppError } from '../../../../../common/errors/app.error'
 import { NotFoundError } from '../../../../../common/errors/not-found.error'
 import { ILocation } from '../../../../../common/transfer/locations/location.interface'
+import { IUserProfile } from '../../../../../common/transfer/users/user-profile.interface'
 import { IUserPublic } from '../../../../../common/transfer/users/user-public.interface'
 import { IUser } from '../../../data/mongo/user.interface'
 import { User, UserDocument } from '../../../database/mongo/schemas/user.schema'
@@ -27,6 +28,29 @@ export class UserRepository {
             }
         } catch (err) {
             throw new NotFoundError(`Could not find user with email ${email}!`, err)
+        }
+    }
+
+    async getUserProfile(id: string): Promise<IUserProfile> {
+        try {
+            const data = await this.userModel.findById(id, createProjection<IUserProfile>(false, 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')).orFail()
+            return {
+                email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                countryOfOrigin: data.countryOfOrigin,
+                address: data.address
+            }
+        } catch (err) {
+            throw new NotFoundError(`Could not find user profile with id ${id}!`, err)
+        }
+    }
+
+    async updateUserProfile(id: string, userProfile: IUserProfile) {
+        try {
+            // TODO
+        } catch (err) {
+            throw new NotFoundError(`Could not update user profile with id ${id}!`, err)
         }
     }
 

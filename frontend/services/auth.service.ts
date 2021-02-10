@@ -5,7 +5,7 @@ import { IUserLoginDto } from "~/../common/transfer/auth/user-login-dto.interfac
 export class AuthService {
   constructor(private axios: NuxtAxiosInstance) { }
 
-  login(data: IUserLoginDto): Promise<IJwtResponseDto> {
-    return this.axios.$post('/auth/login', data)
+  login(data: IUserLoginDto) {
+    return this.axios.$post<IJwtResponseDto>('/auth/login', data)
   }
 }

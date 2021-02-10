@@ -9,19 +9,19 @@ export class LocationsService {
   private cache: { [key in GetLocationsTarget]: Cache } = { users: {}, groups: {} }
   constructor(private axios: NuxtAxiosInstance) { }
 
-  private async _getLocations(countryCode: string, target: GetLocationsTarget): Promise<ILocation[]> {
+  private async _getLocations(countryCode: string, target: GetLocationsTarget) {
     const params: IGetLocationsDto = { countryOfOrigin: countryCode, target }
-    return await this.axios.$get('/locations', { params });
+    return await this.axios.$get<ILocation[]>('/locations', { params });
   }
 
-  async getLocations(countryCode: string, target: GetLocationsTarget): Promise<ILocation[]> {
+  async getLocations(countryCode: string, target: GetLocationsTarget) {
     if (!this.cache[target][countryCode]) {
       this.cache[target][countryCode] = await this._getLocations(countryCode, target)
     }
     return this.cache[target][countryCode]
   }
 
-  async getCountryCodeByLocation(location: ILocation): Promise<string> {
-    return await this.axios.$get('/country-code', { params: location })
+  async getCountryCodeByLocation(location: ILocation) {
+    return await this.axios.$get<string>('/country-code', { params: location })
   }
 }

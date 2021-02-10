@@ -43,8 +43,8 @@ export default class extends mixins(UserMixin) {
       text: 'Overview'
     },
     {
-      to: '/search',
-      text: 'Search'
+      to: '/groups',
+      text: 'Groups'
     },
     {
       to: '/profile',

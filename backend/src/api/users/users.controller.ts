@@ -1,11 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { UserCreateDto } from '../../core/users/dtos/user-create.dto'
+import { UserProfile } from '../../core/users/dtos/user-profile.dto'
 import { UsersService } from '../../core/users/users.service'
 import { JwtGuard } from '../auth-module/jwt.guard'
 import { User } from '../auth-module/user.decorator'
 import { IUser } from '../auth-module/user.interface'
 
-@Controller('users')
+@Controller('user')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
@@ -14,16 +15,22 @@ export class UsersController {
         await this.usersService.createUser(dto)
     }
 
-    @Get(':id')
-    async get(@Param('id') id: string) {
-        console.log(id);
-        // TODO
+    @Get()
+    @UseGuards(JwtGuard)
+    async get(@User() user: IUser) {
+        return await this.usersService.getUserProfile(user.id)
+    }
+
+    @Put()
+    @UseGuards(JwtGuard)
+    async update(@User() user: IUser, @Body() dto: UserProfile) {
+        return await this.usersService.updateUserProfile(user.id, dto)
     }
 
     @Delete()
     @UseGuards(JwtGuard)
     async delete(@User() user: IUser) {
-        console.log('DELETE user ' + user.id);
+        console.log('DELETE user ' + user.id)
         // TODO
     }
 }
