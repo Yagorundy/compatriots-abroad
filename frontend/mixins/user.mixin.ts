@@ -13,16 +13,23 @@ export interface IUserMixin {
 
 @Component
 export class UserMixin extends Vue implements IUserMixin {
+  private isAuthorizedKey = 0
+  
+  created() {
+    this.$jwtService.addTokenChangeEventListener(() => this.isAuthorizedKey++)
+  }
+
   get isAuthorized() {
-    return !!this.$jwtService.token
+    this.isAuthorizedKey
+    return !!this.$jwtService.getToken()
   }
 
   get userId() {
-    return this.$jwtService.tokenPayload?.sub
+    return this.$jwtService.getTokenPayload()?.sub
   }
 
   get user() {
-    const tokenPayload = this.$jwtService.tokenPayload
+    const tokenPayload = this.$jwtService.getTokenPayload()
     if (tokenPayload) {
       return {
         id: tokenPayload.sub,

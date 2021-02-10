@@ -17,10 +17,10 @@ import { UserMixin } from '~/mixins/user.mixin'
 
 @Component
 export default class extends mixins(UserMixin) {
-  username = '{username}'
+  username: string | null | undefined = null
 
   async created() {
-    this.username = this.$jwtService.tokenPayload?.firstName || 'undefined'
+    this.username = this.user?.firstName
   }
 }
 </script>
