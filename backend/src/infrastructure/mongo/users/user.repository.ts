@@ -19,6 +19,10 @@ export class UserRepository {
         return await this.userModel.exists({ _id: id })
     }
 
+    async create(user: IUser) {
+        await this.userModel.create(user);
+    }
+
     async getIdentity(email: string): Promise<IUserIdentity> {
         try {
             const data = await this.userModel.findOne({ email }, createProjection<IUser>(true, 'passwordHash')).orFail()
@@ -74,9 +78,5 @@ export class UserRepository {
             if (err.name === 'DocumentNotFoundError') return []
             throw new AppError(`Error querying user location for country of origin ${countryOfOriginCode}!`, err)
         }
-    }
-
-    async create(user: IUser) {
-        await this.userModel.create(user);
     }
 }

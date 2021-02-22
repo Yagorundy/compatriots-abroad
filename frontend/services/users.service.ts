@@ -5,15 +5,15 @@ import { IUserProfile } from "~/../common/transfer/users/user-profile.interface"
 export class UsersService {
   constructor(private axios: NuxtAxiosInstance) { }
 
-  create(data: IUserCreateDto) {
+  async create(data: IUserCreateDto) {
     return this.axios.$post('/users', data)
   }
 
-  get() {
-    return this.axios.$get<IUserProfile>('/user')
+  async get() {
+    return await this.axios.$get<IUserProfile>('/user')
   }
 
-  update(data: IUserProfile) {
-    return this.axios.$put('/user', data)
+  async update(data: IUserProfile) {
+    return await this.axios.$put('/user', data)
   }
 }

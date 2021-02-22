@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { IGroupCreateDto } from "../../../../common/transfer/groups/group-create-dto.interface";
+import { IGetGroupsForUser } from "../../../../common/transfer/groups/get-groups-for-user-dto.interface";
+import { IGroupDto } from "../../../../common/transfer/groups/group-dto.interface";
 import { GeocodingService } from "../../infrastructure/geocoding/geocoding.service";
 import { GroupRepository } from "../../infrastructure/mongo/groups/group.repository";
 
@@ -7,7 +8,7 @@ import { GroupRepository } from "../../infrastructure/mongo/groups/group.reposit
 export class GroupsService {
     constructor(private groupRepository: GroupRepository, private geocodingService: GeocodingService) { }
 
-    async create(creatorId: string, groupCreateDto: IGroupCreateDto) {
+    async createGroup(creatorId: string, groupCreateDto: IGroupDto) {
         const location = await this.geocodingService.getLocationByAddress(groupCreateDto.address)
         await this.groupRepository.create(creatorId, {
             name: groupCreateDto.name,
@@ -18,6 +19,20 @@ export class GroupsService {
             lat: location.lat,
             lng: location.lng
         })
+    }
+
+    async getGroup(id: string): Promise<IGroupDto> {
+        return await this.groupRepository.getGroup(id)
+    }
+
+    async getGroupsForUser(userId: string): Promise<IGetGroupsForUser> {
+        const [myGroups] = await Promise.all([
+            this.groupRepository.getGroupsForCreator(userId)
+        ])
+        return {
+            myGroups,
+            groupsILike: []
+        }
     }
 
     async getGroupLocations(countryOfOriginCode: string) {

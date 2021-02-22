@@ -8,10 +8,10 @@ export type GroupDocument = Group & Document
 @Schema()
 export class Group implements IGroup {
     @Prop({ type: Types.ObjectId, ref: User.name })
-    creator: User
+    creator: User | string
 
     @Prop({ type: [{ type: Types.ObjectId, ref: User.name }] })
-    admins: User[]
+    admins: (User | string)[]
 
     @Prop()
     name: string
