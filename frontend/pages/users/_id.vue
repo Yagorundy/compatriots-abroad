@@ -66,7 +66,7 @@ export default class extends mixins(AuthorizeMixin) {
   }
 
   logout() {
-    this.$router.push('logout')
+    this.$router.push('/auth/logout')
   }
 }
 </script>

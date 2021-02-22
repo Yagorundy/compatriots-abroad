@@ -21,7 +21,7 @@
             v-for="(group, index) in myGroups"
           ><nuxt-link :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link></li>
         </ul>
-        <button class="group-action-button"><nuxt-link to="/create-group">Create a group</nuxt-link></button>
+        <button class="group-action-button"><nuxt-link to="/groups/create">Create a group</nuxt-link></button>
       </div>
     </div>
   </div>

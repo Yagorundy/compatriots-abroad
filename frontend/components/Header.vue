@@ -47,7 +47,7 @@ export default class extends mixins(UserMixin) {
       text: 'Groups'
     },
     {
-      to: '/profile',
+      to: '/users',
       text: 'Profile'
     }
   ]

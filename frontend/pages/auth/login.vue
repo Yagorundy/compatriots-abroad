@@ -8,7 +8,7 @@
         <input v-model="userLoginData.password" />
       </FormGroup>
 
-      <button type="submit">Log In</button> or <nuxt-link to="signup">Sign up</nuxt-link>
+      <button type="submit">Log In</button> or <nuxt-link to="/users/sign-up">Sign up</nuxt-link>
     </form>
   </div>
 </template>

@@ -23,7 +23,7 @@
         <input v-model="confirmPassword" />
       </FormGroup>
 
-      <button type="submit">Sign up</button> or <nuxt-link to="login">Log In</nuxt-link>
+      <button type="submit">Sign up</button> or <nuxt-link to="/auth/login">Log In</nuxt-link>
     </form>
   </div>
 </template>
@@ -46,7 +46,7 @@ export default class extends Vue {
 
   async signUp() {
     await this.$usersService.create(this.createUserData)
-    this.$router.push('login')
+    this.$router.push('/auth/login')
   }
 }
 </script>
