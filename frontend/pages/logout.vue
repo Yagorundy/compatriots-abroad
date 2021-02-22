@@ -10,7 +10,7 @@ import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 export default class extends mixins(AuthorizeMixin) {
   async created() {
     this.$jwtService.clearToken()
-    this.$router.push('login')
+    this.$router.push('/')
   }
 }
 </script>
