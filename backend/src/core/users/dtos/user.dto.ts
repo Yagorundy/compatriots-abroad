@@ -1,8 +1,11 @@
 import { IsEmail, IsString } from "class-validator";
-import { IUserProfile } from "../../../../../common/transfer/users/user-profile.interface";
+import { IUserDto } from "../../../../../common/transfer/users/user-dto.interface";
 import { IsCountryCode } from "../../validators/is-country-code";
 
-export class UserProfile implements IUserProfile {
+export class UserDto implements IUserDto {
+    @IsString()
+    id: string
+
     @IsString()
     firstName: string
 

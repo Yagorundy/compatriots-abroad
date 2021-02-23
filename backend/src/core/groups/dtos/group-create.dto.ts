@@ -1,8 +1,8 @@
 import { IsString } from "class-validator";
-import { IGroupDto } from "../../../../../common/transfer/groups/group-dto.interface";
+import { IGroupCreateDto } from "../../../../../common/transfer/groups/group-create-dto.interface";
 import { IsCountryCode } from "../../validators/is-country-code";
 
-export class GroupCreateDto implements IGroupDto {
+export class GroupCreateDto implements IGroupCreateDto {
     @IsString()
     name: string
 

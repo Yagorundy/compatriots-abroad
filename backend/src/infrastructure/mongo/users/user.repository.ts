@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { AppError } from '../../../../../common/errors/app.error'
 import { NotFoundError } from '../../../../../common/errors/not-found.error'
-import { ILocation } from '../../../../../common/transfer/locations/location.interface'
-import { IUserProfile } from '../../../../../common/transfer/users/user-profile.interface'
+import { ILocationDto } from '../../../../../common/transfer/locations/location-dto.interface'
+import { IUserDto } from '../../../../../common/transfer/users/user-dto.interface'
 import { IUserPublic } from '../../../../../common/transfer/users/user-public.interface'
 import { IUser } from '../../../data/mongo/user.interface'
 import { User, UserDocument } from '../../../database/mongo/schemas/user.schema'
@@ -35,10 +35,11 @@ export class UserRepository {
         }
     }
 
-    async getUserProfile(id: string): Promise<IUserProfile> {
+    async getUserProfile(id: string): Promise<IUserDto> {
         try {
-            const data = await this.userModel.findById(id, createProjection<IUserProfile>(false, 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')).orFail()
+            const data = await this.userModel.findById(id, createProjection<IUserDto>(false, 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')).orFail()
             return {
+                id,
                 email: data.email,
                 firstName: data.firstName,
                 lastName: data.lastName,
@@ -50,7 +51,7 @@ export class UserRepository {
         }
     }
 
-    async updateUserProfile(id: string, userProfile: IUserProfile) {
+    async updateUserProfile(id: string, userProfile: IUserDto) {
         try {
             // TODO
         } catch (err) {
@@ -62,6 +63,7 @@ export class UserRepository {
         try {
             const data = await this.userModel.findById(id, createProjection<IUser>(false, 'firstName', 'lastName', 'countryOfOrigin')).orFail()
             return {
+                id,
                 firstName: data.firstName,
                 lastName: data.lastName,
                 countryOfOrigin: data.countryOfOrigin
@@ -71,9 +73,9 @@ export class UserRepository {
         }
     }
 
-    async getUserLocations(countryOfOriginCode: string): Promise<ILocation[]> {
+    async getUserLocations(countryOfOriginCode: string): Promise<ILocationDto[]> {
         try {
-            return await this.userModel.find({ countryOfOrigin: countryOfOriginCode }, createProjection<ILocation>(false, 'lat', 'lng')).orFail()
+            return await this.userModel.find({ countryOfOrigin: countryOfOriginCode }, createProjection<ILocationDto>(false, 'lat', 'lng')).orFail()
         } catch (err) {
             if (err.name === 'DocumentNotFoundError') return []
             throw new AppError(`Error querying user location for country of origin ${countryOfOriginCode}!`, err)

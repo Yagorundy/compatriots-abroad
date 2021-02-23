@@ -1,8 +1,8 @@
 import { Type } from "class-transformer";
 import { IsNumber, IsNumberString } from "class-validator";
-import { ILocation } from "../../../../common/transfer/locations/location.interface";
+import { ILocationDto } from "../../../../common/transfer/locations/location-dto.interface";
 
-export class LocationDto implements ILocation {
+export class LocationDto implements ILocationDto {
     @IsNumber()
     @Type(() => Number)
     lat: number

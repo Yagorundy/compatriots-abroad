@@ -1,4 +1,5 @@
-export interface IUserProfile {
+export interface IUserDto {
+    id: string
     firstName: string
     lastName: string
     email: string

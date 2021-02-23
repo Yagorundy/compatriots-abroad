@@ -3,7 +3,7 @@ import { hashSync } from 'bcryptjs'
 import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
 import { UserRepository } from '../../infrastructure/mongo/users/user.repository'
 import { UserCreateDto } from './dtos/user-create.dto'
-import { UserProfile } from './dtos/user-profile.dto'
+import { UserDto } from './dtos/user.dto'
 
 @Injectable()
 export class UsersService {
@@ -34,7 +34,7 @@ export class UsersService {
         return await this.userRepository.getUserProfile(id)
     }
 
-    async updateUserProfile(id: string, userProfileDto: UserProfile) {
+    async updateUserProfile(id: string, userProfileDto: UserDto) {
         return await this.userRepository.getUserProfile(id)
     }
 

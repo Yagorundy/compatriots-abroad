@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { IGetGroupsForUser } from "../../../../common/transfer/groups/get-groups-for-user-dto.interface";
+import { IGroupCreateDto } from "../../../../common/transfer/groups/group-create-dto.interface";
 import { IGroupDto } from "../../../../common/transfer/groups/group-dto.interface";
 import { GeocodingService } from "../../infrastructure/geocoding/geocoding.service";
 import { GroupRepository } from "../../infrastructure/mongo/groups/group.repository";
@@ -8,7 +9,7 @@ import { GroupRepository } from "../../infrastructure/mongo/groups/group.reposit
 export class GroupsService {
     constructor(private groupRepository: GroupRepository, private geocodingService: GeocodingService) { }
 
-    async createGroup(creatorId: string, groupCreateDto: IGroupDto) {
+    async createGroup(creatorId: string, groupCreateDto: IGroupCreateDto) {
         const location = await this.geocodingService.getLocationByAddress(groupCreateDto.address)
         await this.groupRepository.create(creatorId, {
             name: groupCreateDto.name,

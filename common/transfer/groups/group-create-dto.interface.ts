@@ -1,5 +1,4 @@
-export interface IGroupDto {
-    id: string
+export interface IGroupCreateDto {
     name: string
     description: string
     countryOfOrigin: string

@@ -1,5 +1,6 @@
 export interface IUserPublic {
-    firstName: string;
-    lastName: string;
-    countryOfOrigin: string;
+    id: string
+    firstName: string
+    lastName: string
+    countryOfOrigin: string
 }

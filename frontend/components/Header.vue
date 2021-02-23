@@ -39,8 +39,8 @@ export default class extends mixins(UserMixin) {
   siteName = 'Compatriots Abroad'
   routes = [
     {
-      to: '/',
-      text: 'Overview'
+      to: '/search',
+      text: 'Search'
     },
     {
       to: '/groups',
