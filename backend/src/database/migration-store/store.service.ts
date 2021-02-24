@@ -1,19 +1,25 @@
-import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { getMongoModel } from "../../helpers/migration.helper";
 import { IMigrationRun } from "./interfaces/migration-run.interface";
 import { IMigrationStore } from "./interfaces/migration-store.interface";
-import { Migration, MigrationDocument } from "./schemas/migration.schema";
+import { Migration, MigrationDocument, MigrationSchema } from "./schemas/migration.schema";
 
 export class MigrationStoreService implements IMigrationStore {
-    constructor(@InjectModel(Migration.name) private model: Model<MigrationDocument>) { }
+    private _model: Model<MigrationDocument> | null = null
+    private get model() {
+        if (!this._model) throw new Error('Mongo model is not initialized.')
+        return this._model
+    }
 
     private _docId: string | null = null
     private get docId() {
-        if (typeof this._docId !== 'string') throw new Error('Document id for the migrations is not set! Check out the store you are using.')
+        if (!this._docId) throw new Error('Document id for the migrations is not set! Check out the store you are using.')
         return this._docId
     }
-    setDocId(docId: string) {
+
+    async init(docId: string) {
         this._docId = docId
+        this._model = await getMongoModel<MigrationDocument>(Migration.name, MigrationSchema);
     }
 
     async load(callback: (err: Error | null, state?: IMigrationRun) => any) {
