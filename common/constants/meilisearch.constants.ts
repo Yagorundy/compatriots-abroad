@@ -1,0 +1,1 @@
+export const MEILISEARCH_GROUPS_INDEX = 'groups'

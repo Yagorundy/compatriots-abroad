@@ -1,5 +1,5 @@
 import { registerDecorator, ValidationOptions, ValidationArguments, ValidatorConstraintInterface, ValidatorConstraint } from 'class-validator';
-import { countriesByCode } from '../../../../common/constants/countries.constant';
+import { countriesByCode } from '../../../../common/constants/countries.constants';
 
 @ValidatorConstraint()
 class IsCountryCodeConstraint implements ValidatorConstraintInterface {
