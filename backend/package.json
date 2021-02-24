@@ -15,7 +15,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate-meilisearch": "npm run build && migrate up --migrations-dir dist/backend/src/database/meilisearch/migrations --matches *.js --store ./dist/backend/src/database/migration-store/meilisearch.store.js"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.5",
@@ -53,6 +54,7 @@
     "eslint-config-prettier": "7.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.6.3",
+    "migrate": "^1.7.0",
     "prettier": "^2.1.2",
     "supertest": "^6.0.0",
     "ts-jest": "^26.4.3",
