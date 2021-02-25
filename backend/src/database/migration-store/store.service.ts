@@ -1,8 +1,8 @@
 import { Model } from "mongoose";
-import { getMongoModel } from "../../helpers/migration.helper";
+import { getMongoMigrationModel } from "../../helpers/migration.helper";
 import { IMigrationRun } from "./interfaces/migration-run.interface";
 import { IMigrationStore } from "./interfaces/migration-store.interface";
-import { Migration, MigrationDocument, MigrationSchema } from "./schemas/migration.schema";
+import { MigrationDocument } from "./schemas/migration.schema";
 
 export class MigrationStoreService implements IMigrationStore {
     private _model: Model<MigrationDocument> | null = null
@@ -19,7 +19,7 @@ export class MigrationStoreService implements IMigrationStore {
 
     async init(docId: string) {
         this._docId = docId
-        this._model = await getMongoModel<MigrationDocument>(Migration.name, MigrationSchema);
+        this._model = await getMongoMigrationModel();
     }
 
     async load(callback: (err: Error | null, state?: IMigrationRun) => any) {
