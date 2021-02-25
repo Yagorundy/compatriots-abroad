@@ -5,12 +5,15 @@ import { LocationsApiModule } from './api/locations/locations-api.module'
 import { MeilisearchApiModule } from './api/meilisearch/meilisearch-api.module'
 import { UsersApiModule } from './api/users/users-api.module'
 import { AppConfigModule } from './config/app/app-config.module'
+import { MapperModule } from './core/mapper/mapper.module'
 import { MongoModule } from './database/mongo/mongo.module'
 
 @Module({
     imports: [
         // App config
         AppConfigModule,
+        // Mapper
+        MapperModule,
         // Db providers
         MongoModule,
         // Controllers

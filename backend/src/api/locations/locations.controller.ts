@@ -1,9 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { GroupsService } from '../../core/groups/groups.service'
+import { GetLocationsDto } from '../../core/locations/get-locations-query.dto'
+import { LocationDto } from '../../core/locations/location.dto'
 import { UsersService } from '../../core/users/users.service'
 import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
-import { LocationDto } from '../../core/locations/location.dto'
-import { GetLocationsDto } from '../../core/locations/get-locations-query.dto'
 
 @Controller()
 export class LocationsController {
