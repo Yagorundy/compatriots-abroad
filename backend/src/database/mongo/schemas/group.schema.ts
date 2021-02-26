@@ -6,7 +6,7 @@ import { User } from './user.schema';
 export type GroupDocument = Group & Document
 
 @Schema()
-export class Group implements IGroup {
+export class Group implements Omit<IGroup, 'id'> {
     @Prop({ type: Types.ObjectId, ref: User.name })
     creator: User | string
 

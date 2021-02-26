@@ -11,7 +11,7 @@ export class GroupsService {
 
     async createGroup(creatorId: string, groupCreateDto: IGroupCreateDto) {
         const location = await this.geocodingService.getLocationByAddress(groupCreateDto.address)
-        await this.groupRepository.create(creatorId, {
+        await this.groupRepository.createGroup(creatorId, {
             name: groupCreateDto.name,
             description: groupCreateDto.description,
             countryOfOrigin: groupCreateDto.countryOfOrigin,

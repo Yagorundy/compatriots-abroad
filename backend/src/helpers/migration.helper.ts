@@ -10,7 +10,7 @@ import { Group, GroupDocument, GroupSchema } from "../database/mongo/schemas/gro
 import { User, UserDocument, UserSchema } from "../database/mongo/schemas/user.schema";
 
 const getService = async <T>(module: any, service: Type<T>): Promise<T> => {
-    const context = await NestFactory.createApplicationContext(module, { logger: false })
+    const context = await NestFactory.createApplicationContext(module, { logger: ['error'] })
     return context.get(service);
 }
 

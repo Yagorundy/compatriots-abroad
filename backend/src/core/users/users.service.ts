@@ -10,14 +10,14 @@ export class UsersService {
     constructor(private userRepository: UserRepository, private geocodingService: GeocodingService) {}
 
     async checkUser(id: string) {
-        return await this.userRepository.check(id);
+        return await this.userRepository.userExists(id);
     }
 
     async createUser(userCreateDto: UserCreateDto) {
         const location = await this.geocodingService.getLocationByAddress(userCreateDto.address)
         const passwordHash = hashSync(userCreateDto.password)
 
-        await this.userRepository.create({
+        await this.userRepository.createUser({
             firstName: userCreateDto.firstName,
             lastName: userCreateDto.lastName,
             email: userCreateDto.email,

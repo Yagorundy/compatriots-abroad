@@ -1,61 +1,36 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
-import { AppError } from '../../../../../common/errors/app.error';
-import { NotFoundError } from '../../../../../common/errors/not-found.error';
-import { IGroupDto } from '../../../../../common/transfer/groups/group-dto.interface';
-import { IGroupInfoDto } from '../../../../../common/transfer/groups/group-info-dto.interface';
-import { ILocationDto } from '../../../../../common/transfer/locations/location-dto.interface';
 import { IGroup } from '../../../data/mongo/group.interface'
 import { Group, GroupDocument } from '../../../database/mongo/schemas/group.schema'
-import { createProjection } from '../../helpers/projection.helper';
+import { MongoRepository } from '../repository.base';
 
 @Injectable()
-export class GroupRepository {
-    constructor(@InjectModel(Group.name) private groupModel: Model<GroupDocument>) {}
+export class GroupRepository extends MongoRepository<GroupDocument> {
+    constructor(@InjectModel(Group.name) model: Model<GroupDocument>) {
+        super(model)
+    }
 
-    async create(creatorId: string, group: IGroup) {
-        await this.groupModel.create({
+    async createGroup(creatorId: string, group: Omit<IGroup, 'id'>) {
+        await this.create({
             creator: creatorId,
             admins: [creatorId],
             ...group
         })
     }
 
-    async getGroup(id: string): Promise<IGroupDto> {
-        try {
-            const data = await this.groupModel.findById(id, createProjection<IGroup>(false, 'name', 'description', 'countryOfOrigin', 'address')).orFail()
-            return {
-                id,
-                name: data.name,
-                description: data.description,
-                countryOfOrigin: data.countryOfOrigin,
-                address: data.address
-            }
-        } catch (err) {
-            throw new NotFoundError(`Could not find group with id ${id}!`, err)
-        }
+    async getGroup(id: string): Promise<Pick<IGroup, 'id' | 'name' | 'description' | 'countryOfOrigin' | 'address'>> {
+        const doc = await this.get(id, '_id', 'name', 'description', 'countryOfOrigin', 'address')
+        return this.docToObj(doc)
     }
 
-    async getGroupsForCreator(userId: string): Promise<IGroupInfoDto[]> {
-        try {
-            const groups = await this.groupModel.find({ creator: userId }, createProjection<IGroup>(true, 'name')).orFail()
-            return groups.map(g => ({
-                id: g.id!,
-                name: g.name
-            }))
-        } catch (err) {
-            if (err.name === 'DocumentNotFoundError') return []
-            throw new AppError(`Error querying groups for creator ${userId}!`, err)
-        }
+    async getGroupsForCreator(userId: string): Promise<Pick<IGroup, 'id' | 'name'>[]> {
+        const docs = await this.wrapQueryArray(this.model.find({ creator: userId }, this.createProjection('_id', 'name')))
+        return docs.map(this.docToObj)
     }
 
     async getGroupLocations(countryOfOriginCode: string) {
-        try {
-            return await this.groupModel.find({ countryOfOrigin: countryOfOriginCode }, createProjection<ILocationDto>(false, 'lat', 'lng')).orFail()
-        } catch (err) {
-            if (err.name === 'DocumentNotFoundError') return []
-            throw new AppError(`Error querying group location for country of origin ${countryOfOriginCode}!`, err)
-        }
+        const docs = await this.wrapQueryArray(this.model.find({ countryOfOrigin: countryOfOriginCode }, this.createProjection('lat', 'lng')))
+        return docs.map(this.docToObj)
     }
 }

@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 import { IUser } from '../../../data/mongo/user.interface'
 
-export type UserDocument = User & Document
+export type UserDocument = User & Document<string>
 
 @Schema()
-export class User implements IUser {
+export class User implements Omit<IUser, 'id'> {
     @Prop()
     firstName: string
 

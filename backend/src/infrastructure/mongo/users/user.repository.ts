@@ -1,54 +1,34 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { AppError } from '../../../../../common/errors/app.error'
 import { NotFoundError } from '../../../../../common/errors/not-found.error'
-import { ILocationDto } from '../../../../../common/transfer/locations/location-dto.interface'
 import { IUserDto } from '../../../../../common/transfer/users/user-dto.interface'
-import { IUserPublic } from '../../../../../common/transfer/users/user-public.interface'
 import { IUser } from '../../../data/mongo/user.interface'
 import { User, UserDocument } from '../../../database/mongo/schemas/user.schema'
-import { createProjection } from '../../helpers/projection.helper'
-import { IUserIdentity } from './interfaces/user-identity.interface'
+import { MongoRepository } from '../repository.base'
 
 @Injectable()
-export class UserRepository {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
-
-    async check(id: string) {
-        return await this.userModel.exists({ _id: id })
+export class UserRepository extends MongoRepository<UserDocument> {
+    constructor(@InjectModel(User.name) model: Model<UserDocument>) {
+        super(model)
     }
 
-    async create(user: IUser) {
-        await this.userModel.create(user);
+    async userExists(id: string) {
+        return await this.exists(id)
     }
 
-    async getIdentity(email: string): Promise<IUserIdentity> {
-        try {
-            const data = await this.userModel.findOne({ email }, createProjection<IUser>(true, 'passwordHash')).orFail()
-            return {
-                id: data.id,
-                passwordHash: data.passwordHash
-            }
-        } catch (err) {
-            throw new NotFoundError(`Could not find user with email ${email}!`, err)
-        }
+    async createUser(user: Omit<IUser, 'id'>) {
+        await this.create(user)
     }
 
-    async getUserProfile(id: string): Promise<IUserDto> {
-        try {
-            const data = await this.userModel.findById(id, createProjection<IUserDto>(false, 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')).orFail()
-            return {
-                id,
-                email: data.email,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                countryOfOrigin: data.countryOfOrigin,
-                address: data.address
-            }
-        } catch (err) {
-            throw new NotFoundError(`Could not find user profile with id ${id}!`, err)
-        }
+    async getIdentity(email: string): Promise<Pick<IUser, 'id' | 'passwordHash'>> {
+        const doc = await this.wrapQuerySingle(this.model.findOne({ email }, this.createProjection('_id', 'passwordHash')))
+        return this.docToObj(doc)
+    }
+
+    async getUserProfile(id: string): Promise<Pick<IUser, 'id' | 'email' | 'firstName' | 'lastName' | 'countryOfOrigin' | 'address'>> {
+        const doc = await this.get(id, '_id', 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')
+        return this.docToObj(doc)
     }
 
     async updateUserProfile(id: string, userProfile: IUserDto) {
@@ -59,26 +39,13 @@ export class UserRepository {
         }
     }
 
-    async getPublicUser(id: string): Promise<IUserPublic> {
-        try {
-            const data = await this.userModel.findById(id, createProjection<IUser>(false, 'firstName', 'lastName', 'countryOfOrigin')).orFail()
-            return {
-                id,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                countryOfOrigin: data.countryOfOrigin
-            }
-        } catch (err) {
-            throw new NotFoundError(`Could not find user with id ${id}!`, err)
-        }
+    async getPublicUser(id: string): Promise<Pick<IUser, 'id' | 'firstName' | 'lastName' | 'countryOfOrigin'>> {
+        const doc = await this.get(id, '_id', 'firstName', 'lastName', 'countryOfOrigin')
+        return this.docToObj(doc)
     }
 
-    async getUserLocations(countryOfOriginCode: string): Promise<ILocationDto[]> {
-        try {
-            return await this.userModel.find({ countryOfOrigin: countryOfOriginCode }, createProjection<ILocationDto>(false, 'lat', 'lng')).orFail()
-        } catch (err) {
-            if (err.name === 'DocumentNotFoundError') return []
-            throw new AppError(`Error querying user location for country of origin ${countryOfOriginCode}!`, err)
-        }
+    async getUserLocations(countryOfOriginCode: string): Promise<Pick<IUser, 'lat' | 'lng'>[]> {
+        const docs = await this.wrapQueryArray(this.model.find({ countryOfOrigin: countryOfOriginCode }, this.createProjection('lat', 'lng')))
+        return docs.map(this.docToObj)
     }
 }
