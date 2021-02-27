@@ -6,7 +6,7 @@
       v-model="countryName"
       :disabled="disabled"
       :readonly="!showDropdown"
-      @input="showDropdown = true; useInputAsFilter = true"
+      @input="handleInput"
       @click="onInputClicked"
     />
     <ul
@@ -53,6 +53,14 @@ export default class extends Vue {
     return countries
   }
 
+  handleInput() {
+    if (this.countryName === '') {
+      this.emitCountryCode('')
+    }
+    this.showDropdown = true
+    this.useInputAsFilter = true
+  }
+
   onInputClicked(event: Event) {
     this.showDropdown = !this.showDropdown
     this.useInputAsFilter = false
@@ -65,7 +73,11 @@ export default class extends Vue {
   selectCountry(country: typeof countries[number]) {
     this.showDropdown = false
     if (this.value === country.code) return
-    this.$emit('input', country.code)
+    this.emitCountryCode(country.code)
+  }
+
+  emitCountryCode(countryCode: string) {
+    this.$emit('input', countryCode)
   }
 }
 </script>

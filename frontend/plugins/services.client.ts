@@ -3,6 +3,7 @@ import { AuthService } from "~/services/auth.service";
 import { GroupsService } from "~/services/groups.service";
 import { JwtService } from "~/services/jwt.service";
 import { LocationsService } from '~/services/locations.service';
+import { MeilisearchService } from "~/services/meilisearch.service";
 import { UsersService } from "~/services/users.service";
 
 
@@ -12,6 +13,7 @@ const p: Plugin = ({ $axios }, inject) => {
   inject('usersService', new UsersService($axios))
   inject('groupsService', new GroupsService($axios))
   inject('locationsService', new LocationsService($axios))
+  inject('meilisearchService', new MeilisearchService($axios))
 }
 
 export default p;

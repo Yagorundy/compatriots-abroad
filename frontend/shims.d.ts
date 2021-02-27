@@ -4,6 +4,7 @@ import { AuthService } from './services/auth.service'
 import { GroupsService } from './services/groups.service'
 import { JwtService } from './services/jwt.service'
 import { LocationsService } from './services/locations.service'
+import { MeilisearchService } from './services/meilisearch.service'
 import { UsersService } from './services/users.service'
 
 declare module '*.vue' {
@@ -17,6 +18,7 @@ interface Services {
   $usersService: UsersService
   $groupsService: GroupsService
   $locationsService: LocationsService
+  $meilisearchService: MeilisearchService
 }
 
 declare module 'vue/types/vue' {
