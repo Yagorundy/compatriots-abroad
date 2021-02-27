@@ -1,6 +1,8 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
+import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
+import { GroupSchemaDto } from '../groups/dtos/group-schema.dto';
+import { MeilisearchGroupDto } from '../groups/dtos/meilisearch-group.dto';
 
 @Injectable()
 export class GroupProfile extends AutomapperProfile {
@@ -10,6 +12,7 @@ export class GroupProfile extends AutomapperProfile {
 
     mapProfile() {
         return (mapper: Mapper) => {
+            mapper.createMap(GroupSchemaDto, MeilisearchGroupDto)
         }
     }
 }

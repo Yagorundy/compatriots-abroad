@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import { countries, countriesByCode } from '~/../common/constants/countries.constant'
+import { countries, countriesByCode } from '~/../common/constants/countries.constants'
 
 @Component
 export default class extends Vue {  

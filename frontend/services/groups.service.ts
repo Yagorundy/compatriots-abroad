@@ -1,11 +1,11 @@
 import { NuxtAxiosInstance } from "@nuxtjs/axios";
 import { IGetGroupsForUser } from "~/../common/transfer/groups/get-groups-for-user-dto.interface";
-import { IGroupDto } from "~/../common/transfer/groups/group-dto.interface";
+import { IGroupCreateDto } from "~/../common/transfer/groups/group-create-dto.interface";
 
 export class GroupsService {
   constructor(private axios: NuxtAxiosInstance) { }
 
-  async create(data: IGroupDto) {
+  async create(data: IGroupCreateDto) {
     return await this.axios.$post('/groups', data)
   }
 

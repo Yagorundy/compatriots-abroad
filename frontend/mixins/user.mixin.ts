@@ -1,7 +1,7 @@
 import { Component, Vue } from "nuxt-property-decorator";
-import { IUserPublic } from "~/../common/transfer/users/user-public.interface";
+import { IUserPublicDto } from "~/../common/transfer/users/user-public-dto.interface";
 
-interface IUser extends IUserPublic {
+interface IUser extends IUserPublicDto {
   id: string
 }
 

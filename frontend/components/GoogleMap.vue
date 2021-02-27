@@ -10,9 +10,9 @@
 <script lang="ts">
 import { Component, mixins, Watch } from 'nuxt-property-decorator'
 import { Loader } from '@googlemaps/js-api-loader'
-import { countries, countriesByCode } from '~/../common/constants/countries.constant'
-import { ILocation } from '~/../common/transfer/locations/location.interface'
+import { countries, countriesByCode } from '~/../common/constants/countries.constants'
 import { UserMixin } from '~/mixins/user.mixin'
+import { ILocationDto } from '~/../common/transfer/locations/location-dto.interface'
 
 type MarkerType = 'user' | 'group'
 
@@ -81,7 +81,7 @@ export default class extends mixins(UserMixin) {
       countryCode = this.$jwtService.getTokenPayload()?.countryOfOrigin
     }
     if (!countryCode && navigator.geolocation) {
-      const location = await new Promise<ILocation>((res, rej) =>
+      const location = await new Promise<ILocationDto>((res, rej) =>
         navigator.geolocation.getCurrentPosition(
           position => res({ lat: position.coords.latitude, lng: position.coords.longitude }),
           rej

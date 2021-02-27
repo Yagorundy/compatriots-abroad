@@ -1,5 +1,5 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
+import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
 import { GeocodingCoordinatesDto } from '../locations/geocoding-coordinates.dto';
 import { LocationDto } from '../locations/location.dto';

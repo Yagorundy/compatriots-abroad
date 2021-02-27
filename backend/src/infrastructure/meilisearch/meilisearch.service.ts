@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { MEILISEARCH_GROUPS_INDEX } from '../../../../common/constants/meilisearch.constants'
+import { IMeilisearchGroup } from '../../../../common/transfer/meilisearch/meilisearch-group-dto.interface'
 import { MeilisearchClientService } from '../../database/meilisearch/meilisearch-client.service'
 
 @Injectable()
@@ -15,12 +16,15 @@ export class MeilisearchService {
         return await this.meilisearchClientService.getIndex(MEILISEARCH_GROUPS_INDEX);
     }
 
-    async addGroup() {
-        const index = await this.getGroupsIndex();
-        // TODO(Yavorcho)
+    async addGroup(group: IMeilisearchGroup) {
+        const index = await this.getGroupsIndex()
+        const update = await index.addDocuments([group])
+        await index.waitForPendingUpdate(update.updateId)
     }
 
-    async removeGroup() {
-        // TODO(Yavorcho)
+    async removeGroup(id: string) {
+        const index = await this.getGroupsIndex()
+        const update = await index.deleteDocument(id)
+        await index.waitForPendingUpdate(update.updateId)
     }
 }

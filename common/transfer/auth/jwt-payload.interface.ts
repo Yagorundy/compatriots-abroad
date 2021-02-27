@@ -1,5 +1,5 @@
-import { IUserPublic } from "../users/user-public.interface";
+import { IUserPublicDto } from "../users/user-public-dto.interface";
 
-export interface IJwtPayload extends IUserPublic {
+export interface IJwtPayload extends IUserPublicDto {
     sub: string
 }

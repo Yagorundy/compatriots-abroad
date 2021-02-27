@@ -1,5 +1,5 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import type { Mapper } from '@automapper/types';
+import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

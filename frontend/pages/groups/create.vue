@@ -21,12 +21,12 @@
 
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
-import { IGroupDto } from '~/../common/transfer/groups/group-dto.interface'
+import { IGroupCreateDto } from '~/../common/transfer/groups/group-create-dto.interface'
 import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 
 @Component
 export default class extends mixins(AuthorizeMixin) {
-  createGroupData: IGroupDto = {
+  createGroupData: IGroupCreateDto = {
     name: '',
     description: '',
     countryOfOrigin: '',

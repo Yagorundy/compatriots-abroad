@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compareSync } from "bcryptjs";
 import { InvalidLoginError } from "../../../../common/errors/auth/invalid-login.error";
 import { IJwtResponseDto } from "../../../../common/transfer/auth/jwt-response-dto.interface";
-import { IUserPublic } from "../../../../common/transfer/users/user-public.interface";
+import { IUserPublicDto } from "../../../../common/transfer/users/user-public-dto.interface";
 import { IUserIdentity } from "../../infrastructure/mongo/users/interfaces/user-identity.interface";
 import { UserRepository } from "../../infrastructure/mongo/users/user.repository";
 import { UserLoginDto } from "./dtos/user-login.dto";
@@ -24,13 +24,13 @@ export class AuthService {
         }
     }
 
-    private createJwtResponse(identity: IUserIdentity, publicUser: IUserPublic): IJwtResponseDto {
+    private createJwtResponse(identity: IUserIdentity, publicUser: IUserPublicDto): IJwtResponseDto {
         return {
             access_token: this.signToken(identity, publicUser)
         }
     }
 
-    private signToken(identity: IUserIdentity, publicUser: IUserPublic) {
+    private signToken(identity: IUserIdentity, publicUser: IUserPublicDto) {
         return this.jwtService.sign({
             sub: identity.id,
             ...publicUser

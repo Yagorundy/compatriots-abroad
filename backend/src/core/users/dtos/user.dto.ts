@@ -1,8 +1,8 @@
 import { IsEmail, IsString } from "class-validator";
-import { IUserDto } from "../../../../../common/transfer/users/user-dto.interface";
+import { IUserProfileDto } from "../../../../../common/transfer/users/user-profile-dto.interface";
 import { IsCountryCode } from "../../validators/is-country-code";
 
-export class UserDto implements IUserDto {
+export class UserDto implements IUserProfileDto {
     @IsString()
     id: string
 

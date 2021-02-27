@@ -51,7 +51,7 @@ export abstract class MongoRepository<T extends Document> {
             versionKey: false,
             transform: (_doc, res, _options) => {
                 if (res._id) {
-                    res.id = res._id
+                    res.id = res._id.toString()
                     delete res._id
                 }
             }
@@ -63,7 +63,7 @@ export abstract class MongoRepository<T extends Document> {
     }
 
     protected async create(doc: LeanDocument<T>) {
-        return await this.modelCasted.create(doc)
+        return await this.modelCasted.create(doc) as DocumentNonNullableId<T>
     }
 
     protected async get(id: string, ...fields: (keyof LeanDocument<T>)[]) {

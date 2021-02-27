@@ -1486,4 +1486,4 @@ export const countries = [
 export const countriesByCode: { [code: string]: typeof countries[number] } = countries.reduce((result, curr) => {
     result[curr.code] = curr;
     return result;
-}, {} as any);
+}, {} as any)

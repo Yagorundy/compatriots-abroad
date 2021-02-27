@@ -1,8 +1,11 @@
-export interface IGroup {
+export interface IUserSchema {
     id: string
 
-    name: string
-    description: string
+    firstName: string
+    lastName: string
+
+    email: string
+    passwordHash: string
 
     countryOfOrigin: string
     address: string

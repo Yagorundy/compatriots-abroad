@@ -1,9 +1,9 @@
 import { NuxtAxiosInstance } from "@nuxtjs/axios";
 import { IGetLocationsDto } from "~/../common/transfer/locations/get-locations-dto.interface";
 import { GetLocationsTarget } from "~/../common/transfer/locations/get-locations-target.type";
-import { ILocation } from "~/../common/transfer/locations/location.interface";
+import { ILocationDto } from "~/../common/transfer/locations/location-dto.interface";
 
-type Cache = { [countyCode: string]: ILocation[] }
+type Cache = { [countyCode: string]: ILocationDto[] }
 
 export class LocationsService {
   private cache: { [key in GetLocationsTarget]: Cache } = { users: {}, groups: {} }
@@ -11,7 +11,7 @@ export class LocationsService {
 
   private async _getLocations(countryCode: string, target: GetLocationsTarget) {
     const params: IGetLocationsDto = { countryOfOrigin: countryCode, target }
-    return await this.axios.$get<ILocation[]>('/locations', { params });
+    return await this.axios.$get<ILocationDto[]>('/locations', { params });
   }
 
   async getLocations(countryCode: string, target: GetLocationsTarget) {
@@ -21,7 +21,7 @@ export class LocationsService {
     return this.cache[target][countryCode]
   }
 
-  async getCountryCodeByLocation(location: ILocation) {
+  async getCountryCodeByLocation(location: ILocationDto) {
     return await this.axios.$get<string>('/country-code', { params: location })
   }
 }

@@ -12,10 +12,10 @@ import { MongoModule } from './database/mongo/mongo.module'
     imports: [
         // App config
         AppConfigModule,
-        // Mapper
-        MapperModule,
         // Db providers
         MongoModule,
+        // Mapper
+        MapperModule,
         // Controllers
         AuthApiModule,
         UsersApiModule,

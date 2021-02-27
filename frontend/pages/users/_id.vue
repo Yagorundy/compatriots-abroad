@@ -30,26 +30,27 @@
 
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
-import { IUserProfile } from '~/../common/transfer/users/user-profile.interface'
+import { IUserProfileDto } from '~/../common/transfer/users/user-profile-dto.interface'
 import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 
 @Component
 export default class extends mixins(AuthorizeMixin) {
-  profile: IUserProfile = {
+  profile: IUserProfileDto = {
+    id: '',
     firstName: '',
     lastName: '',
     email: '',
     countryOfOrigin: '',
     address: ''
   }
-  profileSnapshot: IUserProfile = this.profile
+  profileSnapshot: IUserProfileDto = this.profile
 
   private snapshotProfile() {
     this.profileSnapshot = JSON.parse(JSON.stringify(this.profile))
   }
 
   get hasChanges() {
-    return (Object.keys(this.profile) as (keyof IUserProfile)[]).some(key => this.profile[key] != this.profileSnapshot[key])
+    return (Object.keys(this.profile) as (keyof IUserProfileDto)[]).some(key => this.profile[key] != this.profileSnapshot[key])
   }
 
   created() {

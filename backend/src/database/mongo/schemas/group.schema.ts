@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document, Types } from 'mongoose';
-import { IGroup } from '../../../data/mongo/group.interface'
+import { IGroupSchema } from '../../../data/mongo/group-schema.interface'
 import { User } from './user.schema';
 
 export type GroupDocument = Group & Document
 
 @Schema()
-export class Group implements Omit<IGroup, 'id'> {
+export class Group implements Omit<IGroupSchema, 'id'> {
     @Prop({ type: Types.ObjectId, ref: User.name })
     creator: User | string
 
