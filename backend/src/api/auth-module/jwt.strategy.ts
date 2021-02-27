@@ -4,8 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { IJwtPayload } from '../../../../common/transfer/auth/jwt-payload.interface';
 import { IUser } from './user.interface';
 import { UsersService } from '../../core/users/users.service';
-import { AuthorizationError } from '../../../../common/errors/authorization.error';
 import { JwtConfigService } from '../../config/jwt/jwt-config.service';
+import { AuthenticationError } from '../../../../common/errors/authentication.error';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     async validate(payload: IJwtPayload): Promise<IUser> {
         const user: IUser = { id: payload.sub }
-        if (!await this.usersService.checkUser(user.id)) throw new AuthorizationError('Invalid user id')
+        if (!await this.usersService.checkUser(user.id)) throw new AuthenticationError('User doesn\'t exist!')
         return user
     }
 }

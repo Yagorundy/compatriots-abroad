@@ -20,4 +20,8 @@ export class GroupsService {
   // async update(data: IUserProfile) {
   //   return await this.axios.$put('/groups', data)
   // }
+
+  async delete(id: string) {
+    await this.axios.$delete(`/groups/${id}`)
+  }
 }

@@ -6,6 +6,9 @@ export class GroupSchemaDto implements IGroupSchema {
     id: string
 
     @AutoMap()
+    creatorId: string
+
+    @AutoMap()
     name: string
 
     @AutoMap()

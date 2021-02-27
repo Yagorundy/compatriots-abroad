@@ -22,7 +22,7 @@ export class MeilisearchService {
         await index.waitForPendingUpdate(update.updateId)
     }
 
-    async removeGroup(id: string) {
+    async deleteGroup(id: string) {
         const index = await this.getGroupsIndex()
         const update = await index.deleteDocument(id)
         await index.waitForPendingUpdate(update.updateId)
