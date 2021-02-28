@@ -21,7 +21,6 @@
             v-for="(group, index) in myGroups"
           >
             <nuxt-link :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link>
-            <button class="delete-btn" @click="deleteGroup(group.id)">delete</button>
           </li>
         </ul>
         <button class="group-action-button"><nuxt-link to="/groups/create">Create a group</nuxt-link></button>
@@ -45,14 +44,6 @@ export default class extends mixins(AuthorizeMixin) {
     this.myGroups = myGroups
     this.groupsILike = groupsILike
   }
-
-  async deleteGroup (id: string) {
-    await this.$groupsService.delete(id)
-    const index = this.myGroups.findIndex(g => g.id === id)
-    if (index !== -1) {
-      this.myGroups.splice(index, 1)
-    }
-  }
 }
 </script>
 
@@ -67,10 +58,6 @@ export default class extends mixins(AuthorizeMixin) {
     li {
       display: flex;
       justify-content: center;
-
-      .delete-btn {
-        margin-left: 5px;
-      }
     }
   }
 

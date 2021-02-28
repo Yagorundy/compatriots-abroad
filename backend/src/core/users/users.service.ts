@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { hashSync } from 'bcryptjs'
+import { IUserCreateDto } from '../../../../common/transfer/users/user-create-dto.interface'
+import { IUserProfileDto } from '../../../../common/transfer/users/user-profile-dto.interface'
 import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
 import { UserRepository } from '../../infrastructure/mongo/users/user.repository'
-import { UserCreateDto } from './dtos/user-create.dto'
-import { UserDto } from './dtos/user.dto'
 
 @Injectable()
 export class UsersService {
@@ -13,7 +13,7 @@ export class UsersService {
         return await this.userRepository.userExists(id);
     }
 
-    async createUser(userCreateDto: UserCreateDto) {
+    async createUser(userCreateDto: IUserCreateDto) {
         const location = await this.geocodingService.getLocationByAddress(userCreateDto.address)
         const passwordHash = hashSync(userCreateDto.password)
 
@@ -24,7 +24,7 @@ export class UsersService {
             passwordHash,
             countryOfOrigin: userCreateDto.countryOfOrigin,
             address: userCreateDto.address,
-            country: location.countryCode,
+            country: location.country,
             lat: location.lat,
             lng: location.lng
         })
@@ -34,7 +34,7 @@ export class UsersService {
         return await this.userRepository.getUserProfile(id)
     }
 
-    async updateUserProfile(id: string, userProfileDto: UserDto) {
+    async updateUserProfile(id: string, userProfileDto: IUserProfileDto) {
         return await this.userRepository.getUserProfile(id)
     }
 

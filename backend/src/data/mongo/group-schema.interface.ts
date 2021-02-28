@@ -1,4 +1,6 @@
-export interface IGroupSchema {
+import { IAddress } from "../common/address.interface";
+
+export interface IGroupSchema extends IAddress {
     id: string
     creatorId: string
 
@@ -6,8 +8,4 @@ export interface IGroupSchema {
     description: string
 
     countryOfOrigin: string
-    address: string
-    country: string
-    lat: number
-    lng: number
 }

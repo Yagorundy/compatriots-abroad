@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
+import { Document, Types } from 'mongoose'
 import { IUserSchema } from '../../../data/mongo/user-schema.interface'
 
 export type UserDocument = User & Document
@@ -32,6 +32,9 @@ export class User implements Omit<IUserSchema, 'id'> {
 
     @Prop()
     lng: number
+
+    @Prop({ type: [{ type: Types.ObjectId, ref: User.name }] })
+    likedGroups: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

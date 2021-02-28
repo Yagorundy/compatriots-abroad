@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { GroupCreateDto } from "../../core/groups/dtos/group-create.dto";
+import { GroupUpdateDto } from "../../core/groups/dtos/group-update.dto";
 import { GroupsService } from "../../core/groups/groups.service";
 import { JwtGuard } from "../auth-module/jwt.guard";
 import { User } from "../auth-module/user.decorator";
@@ -17,14 +18,20 @@ export class GroupsController {
 
     @Get(':id')
     @UseGuards(JwtGuard)
-    async getGroup(@Param('id') id: string) {
-        return await this.groupsService.getGroup(id)
+    async getGroup(@Param('id') id: string, @User() user: IUser) {
+        return await this.groupsService.getGroup(id, user.id)
     }
 
     @Get()
     @UseGuards(JwtGuard)
     async getGroupsForUser(@User() user: IUser) {
         return await this.groupsService.getGroupsForUser(user.id)
+    }
+
+    @Put(':id')
+    @UseGuards(JwtGuard)
+    async updateGroup(@Param('id') id: string, @User() user: IUser, @Body() dto: GroupUpdateDto) {
+        return await this.groupsService.updateGroup(id, user.id, dto)
     }
 
     @Delete(':id')

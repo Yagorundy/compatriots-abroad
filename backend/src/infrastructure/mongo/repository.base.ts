@@ -71,7 +71,7 @@ export abstract class MongoRepository<T extends Document> {
     }
 
     protected async patch(id: string, doc: Partial<LeanDocument<T>>) {
-        return await this.modelCasted.updateOne({ _id: id }, { $set: doc })
+        return await this.modelCasted.findByIdAndUpdate(id, doc, { new: true }) as DocumentNonNullableId<T>
     }
 
     protected async delete(id: string) {

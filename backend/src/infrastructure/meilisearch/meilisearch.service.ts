@@ -20,7 +20,7 @@ export class MeilisearchService {
         return this.meilisearchClientService.index(MEILISEARCH_GROUPS_INDEX);
     }
 
-    async addGroup(group: IMeilisearchGroup) {
+    async upsertGroup(group: IMeilisearchGroup) {
         const index = this.getGroupsIndex()
         const update = await index.addDocuments([group])
         await index.waitForPendingUpdate(update.updateId)

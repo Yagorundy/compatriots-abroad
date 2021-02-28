@@ -1,8 +1,8 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
+import { CoordinatesDto } from '../locations/coordinates.dto';
 import { GeocodingCoordinatesDto } from '../locations/geocoding-coordinates.dto';
-import { LocationDto } from '../locations/location.dto';
 
 @Injectable()
 export class LocationProfile extends AutomapperProfile {
@@ -12,7 +12,7 @@ export class LocationProfile extends AutomapperProfile {
 
     mapProfile() {
         return (mapper: Mapper) => {
-            mapper.createMap(GeocodingCoordinatesDto, LocationDto);
+            mapper.createMap(GeocodingCoordinatesDto, CoordinatesDto);
         }
     }
 }

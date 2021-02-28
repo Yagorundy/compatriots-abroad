@@ -5,16 +5,20 @@ import { AuthorizationError } from "../../../../common/errors/authorization.erro
 import { IGetGroupsForUser } from "../../../../common/transfer/groups/get-groups-for-user-dto.interface";
 import { IGroupCreateDto } from "../../../../common/transfer/groups/group-create-dto.interface";
 import { IGroupDto } from "../../../../common/transfer/groups/group-dto.interface";
+import { IGroupUpdateDto } from "../../../../common/transfer/groups/group-update-dto.interface";
 import { GeocodingService } from "../../infrastructure/geocoding/geocoding.service";
 import { MeilisearchService } from "../../infrastructure/meilisearch/meilisearch.service";
 import { GroupRepository } from "../../infrastructure/mongo/groups/group.repository";
+import { UserRepository } from "../../infrastructure/mongo/users/user.repository";
 import { GroupSchemaDto } from "./dtos/group-schema.dto";
+import { GroupDto } from "./dtos/group.dto";
 import { MeilisearchGroupDto } from "./dtos/meilisearch-group.dto";
 
 @Injectable()
 export class GroupsService {
     constructor(
         private groupRepository: GroupRepository,
+        private userRepository: UserRepository,
         private geocodingService: GeocodingService,
         private meilisearchService: MeilisearchService,
         @InjectMapper() private mapper: Mapper
@@ -27,15 +31,20 @@ export class GroupsService {
             description: groupCreateDto.description,
             countryOfOrigin: groupCreateDto.countryOfOrigin,
             address: groupCreateDto.address,
-            country: location.countryCode,
+            country: location.country,
             lat: location.lat,
             lng: location.lng
         })
-        await this.meilisearchService.addGroup(this.mapper.map(group, MeilisearchGroupDto, GroupSchemaDto))
+        await this.meilisearchService.upsertGroup(this.mapper.map(group, MeilisearchGroupDto, GroupSchemaDto))
     }
 
-    async getGroup(id: string): Promise<IGroupDto> {
-        return await this.groupRepository.getGroup(id)
+    async getGroup(groupId: string, userId: string): Promise<IGroupDto> {
+        const [group, likedGroups] = await Promise.all([
+            this.groupRepository.getGroup(groupId),
+            this.userRepository.getUserLikedGroups(userId)
+        ])
+        const isLiked = likedGroups.some(gid => gid === group.id)
+        return this.mapper.map(group, GroupDto, GroupSchemaDto, { extraArguments: { isLiked } })
     }
 
     async getGroupsForUser(userId: string): Promise<IGetGroupsForUser> {
@@ -52,10 +61,18 @@ export class GroupsService {
         return await this.groupRepository.getGroupLocations(countryOfOriginCode)
     }
 
-    async deleteGroup(id: string, deleterId: string) {
-        const creator = await this.groupRepository.getGroupCreatorId(id)
-        if (creator !== deleterId) throw new AuthorizationError('You cannot delete this group!')
-        await this.groupRepository.deleteGroup(id)
-        await this.meilisearchService.deleteGroup(id)
+    async updateGroup(groupId: string, updaterId: string, groupUpdateDto: IGroupUpdateDto) {
+        const creatorId = await this.groupRepository.getGroupCreatorId(groupId)
+        if (creatorId !== updaterId) throw new AuthorizationError('You cannot edit this group!')
+        const location = await this.geocodingService.getLocationByAddress(groupUpdateDto.address)
+        const updated = await this.groupRepository.updateGroup(groupId, { ...groupUpdateDto, ...location, creatorId: updaterId })
+        await this.meilisearchService.upsertGroup(updated)
+    }
+
+    async deleteGroup(groupId: string, deleterId: string) {
+        const creatorId = await this.groupRepository.getGroupCreatorId(groupId)
+        if (creatorId !== deleterId) throw new AuthorizationError('You cannot delete this group!')
+        await this.groupRepository.deleteGroup(groupId)
+        await this.meilisearchService.deleteGroup(groupId)
     }
 }

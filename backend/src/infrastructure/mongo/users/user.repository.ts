@@ -17,8 +17,8 @@ export class UserRepository extends MongoRepository<UserDocument> {
         return await this.exists(id)
     }
 
-    async createUser(user: Omit<IUserSchema, 'id'>) {
-        await this.create(user)
+    async createUser(user: Omit<IUserSchema, 'id' | 'likedGroups'>) {
+        await this.create({ ...user, likedGroups: [] })
     }
 
     async getIdentity(email: string): Promise<Pick<IUserSchema, 'id' | 'passwordHash'>> {
@@ -47,5 +47,10 @@ export class UserRepository extends MongoRepository<UserDocument> {
     async getUserLocations(countryOfOriginCode: string): Promise<Pick<IUserSchema, 'lat' | 'lng'>[]> {
         const docs = await this.wrapQueryArray(this.model.find({ countryOfOrigin: countryOfOriginCode }, this.createProjection('lat', 'lng')))
         return docs.map(this.docToObj)
+    }
+
+    async getUserLikedGroups(id: string): Promise<string[]> {
+        const doc = await this.get(id, 'likedGroups')
+        return doc.likedGroups
     }
 }

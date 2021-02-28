@@ -1,4 +1,6 @@
-export interface IUserSchema {
+import { IAddress } from "../common/address.interface";
+
+export interface IUserSchema extends IAddress {
     id: string
 
     firstName: string
@@ -8,8 +10,6 @@ export interface IUserSchema {
     passwordHash: string
 
     countryOfOrigin: string
-    address: string
-    country: string
-    lat: number
-    lng: number
+
+    likedGroups: string[]
 }

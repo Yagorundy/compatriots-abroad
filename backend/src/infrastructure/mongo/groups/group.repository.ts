@@ -19,8 +19,8 @@ export class GroupRepository extends MongoRepository<GroupDocument> {
         return this.docToObj(doc)
     }
 
-    async getGroup(id: string): Promise<Pick<IGroupSchema, 'id' | 'name' | 'description' | 'countryOfOrigin' | 'address'>> {
-        const doc = await this.get(id, '_id', 'name', 'description', 'countryOfOrigin', 'address')
+    async getGroup(id: string): Promise<Pick<IGroupSchema, 'id' | 'creatorId' | 'name' | 'description' | 'countryOfOrigin' | 'address'>> {
+        const doc = await this.get(id, '_id', 'creatorId', 'name', 'description', 'countryOfOrigin', 'address')
         return this.docToObj(doc)
     }
 
@@ -37,6 +37,11 @@ export class GroupRepository extends MongoRepository<GroupDocument> {
     async getGroupLocations(countryOfOriginCode: string): Promise<Pick<IGroupSchema, 'lat' | 'lng'>[]> {
         const docs = await this.wrapQueryArray(this.model.find({ countryOfOrigin: countryOfOriginCode }, this.createProjection('lat', 'lng')))
         return docs.map(this.docToObj)
+    }
+
+    async updateGroup(id: string, data: Omit<IGroupSchema, 'id'>) {
+        const doc = await this.patch(id, data)
+        return this.docToObj(doc)
     }
 
     async deleteGroup(id: string) {

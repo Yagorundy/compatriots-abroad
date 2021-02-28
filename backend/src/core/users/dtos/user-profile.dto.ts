@@ -2,7 +2,7 @@ import { IsEmail, IsString } from "class-validator";
 import { IUserProfileDto } from "../../../../../common/transfer/users/user-profile-dto.interface";
 import { IsCountryCode } from "../../validators/is-country-code";
 
-export class UserDto implements IUserProfileDto {
+export class UserProfileDto implements IUserProfileDto {
     @IsString()
     id: string
 

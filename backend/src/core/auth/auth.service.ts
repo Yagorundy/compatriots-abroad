@@ -4,7 +4,7 @@ import { compareSync } from "bcryptjs";
 import { InvalidLoginError } from "../../../../common/errors/auth/invalid-login.error";
 import { IJwtResponseDto } from "../../../../common/transfer/auth/jwt-response-dto.interface";
 import { IUserPublicDto } from "../../../../common/transfer/users/user-public-dto.interface";
-import { IUserIdentity } from "../../infrastructure/mongo/users/interfaces/user-identity.interface";
+import { IUserIdentity } from "../../data/mongo/user-identity.interface";
 import { UserRepository } from "../../infrastructure/mongo/users/user.repository";
 import { UserLoginDto } from "./dtos/user-login.dto";
 import { IJwtPayload } from "../../../../common/transfer/auth/jwt-payload.interface";

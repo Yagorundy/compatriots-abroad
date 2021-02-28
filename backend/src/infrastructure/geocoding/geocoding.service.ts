@@ -1,6 +1,7 @@
 import { HttpService, Injectable } from '@nestjs/common'
 import { AppError } from '../../../../common/errors/app.error'
 import { ILocationDto } from '../../../../common/transfer/locations/location-dto.interface'
+import { IAddress } from '../../data/common/address.interface'
 import { Geocoding } from '../../data/geocoding/geocoding.namespace'
 
 interface GeocodeParams {
@@ -12,7 +13,7 @@ interface GeocodeParams {
 export class GeocodingService {
     constructor(private httpService: HttpService) {}
 
-    private async _getLocation(params: GeocodeParams): Promise<ILocationDto & { countryCode: string }> {
+    private async _getLocation(params: GeocodeParams): Promise<Omit<IAddress, 'address'>> {
         const { data } = await this.httpService.get<Geocoding.Response>('/json', { params }).toPromise()
         if (data.status === 'ZERO_RESULTS') throw new AppError('Could not find location')
 
@@ -21,7 +22,7 @@ export class GeocodingService {
         const coords = result.geometry.location;
 
         return {
-            countryCode: country.short_name,
+            country: country.short_name,
             lat: coords.lat,
             lng: coords.lng
         }
@@ -33,6 +34,6 @@ export class GeocodingService {
 
     async getCountryCodeByLocation(location: ILocationDto): Promise<string> {
         const result = await this._getLocation({ latlng: `${location.lat},${location.lng}` })
-        return result.countryCode
+        return result.country
     }
 }
