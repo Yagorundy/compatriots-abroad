@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { GroupsService } from '../../core/groups/groups.service'
-import { GetLocationsDto } from '../../core/locations/get-locations-query.dto'
-import { LocationDto } from '../../core/locations/location.dto'
+import { CoordinatesDto } from '../../core/locations/coordinates.dto'
+import { GetCoordinatesDto } from '../../core/locations/get-coordinates-query.dto'
 import { UsersService } from '../../core/users/users.service'
 import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
 
@@ -13,16 +13,16 @@ export class LocationsController {
         private geocodingService: GeocodingService
     ) {}
 
-    @Get('locations')
-    async getLocations(@Query() { target, countryOfOrigin }: GetLocationsDto) {
+    @Get('coordinates')
+    async getCoordinates(@Query() { target, countryOfOrigin }: GetCoordinatesDto) {
         switch (target) {
-            case 'users': return await this.usersService.getUserLocations(countryOfOrigin)
-            case 'groups': return await this.groupsService.getGroupLocations(countryOfOrigin)
+            case 'users': return await this.usersService.getUsersCoordinates(countryOfOrigin)
+            case 'groups': return await this.groupsService.getGroupsCoordinates(countryOfOrigin)
         }
     }
 
     @Get('country-code')
-    async getCountryCode(@Query() location: LocationDto) {
-        return await this.geocodingService.getCountryCodeByLocation(location)
+    async getCountryCode(@Query() coordinates: CoordinatesDto) {
+        return await this.geocodingService.getCountryCodeByCoordinates(coordinates)
     }
 }

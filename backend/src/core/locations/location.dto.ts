@@ -1,13 +1,13 @@
-import { Type } from "class-transformer";
-import { IsNumber } from "class-validator";
-import { ILocationDto } from "../../../../common/transfer/locations/location-dto.interface";
+import { AutoMap } from "@automapper/classes";
+import { ILocation } from "../../data/common/location.interface";
 
-export class LocationDto implements ILocationDto {
-    @IsNumber()
-    @Type(() => Number)
+export class LocationDto implements ILocation {
+    @AutoMap()
     lat: number
 
-    @IsNumber()
-    @Type(() => Number)
+    @AutoMap()
     lng: number
+
+    @AutoMap()
+    country: string
 }

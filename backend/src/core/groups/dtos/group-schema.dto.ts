@@ -1,7 +1,8 @@
 import { AutoMap } from "@automapper/classes";
 import { IGroupSchema } from "../../../data/mongo/group-schema.interface";
+import { AddressDto } from "../../locations/address.dto";
 
-export class GroupSchemaDto implements IGroupSchema {
+export class GroupSchemaDto extends AddressDto implements IGroupSchema  {
     @AutoMap()
     id: string
 
@@ -16,16 +17,4 @@ export class GroupSchemaDto implements IGroupSchema {
 
     @AutoMap()
     countryOfOrigin: string
-
-    @AutoMap()
-    address: string
-
-    @AutoMap()
-    country: string
-
-    @AutoMap()
-    lat: number
-
-    @AutoMap()
-    lng: number
 }

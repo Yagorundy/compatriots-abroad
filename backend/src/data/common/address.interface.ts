@@ -1,6 +1,5 @@
-import { ICoordinates } from "./coordinates.interface";
+import { ILocation } from "./location.interface";
 
-export interface IAddress extends ICoordinates {
+export interface IAddress extends ILocation {
     address: string
-    country: string
 }

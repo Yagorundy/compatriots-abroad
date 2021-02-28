@@ -1,25 +1,25 @@
 import { registerDecorator, ValidationOptions, ValidationArguments, ValidatorConstraintInterface, ValidatorConstraint } from 'class-validator';
-import { GetLocationsTarget } from '../../../../common/transfer/locations/get-locations-target.type';
+import { GetCoordinatesTarget } from '../../../../common/transfer/coordinates/get-coordinates-target.type';
 
 @ValidatorConstraint()
-class IsLocationsTargetConstraint implements ValidatorConstraintInterface {
-    private validateValues(targetCasted: GetLocationsTarget) {
+class IsCoordinatesTargetConstraint implements ValidatorConstraintInterface {
+    private validateValues(targetCasted: GetCoordinatesTarget) {
         return targetCasted === 'users' || targetCasted === 'groups'
     }
 
     validate(target: any, _args: ValidationArguments) {
-        return typeof target === 'string' && this.validateValues(target as GetLocationsTarget)
+        return typeof target === 'string' && this.validateValues(target as GetCoordinatesTarget)
     }
 }
 
-export function IsLocationsTarget(validationOptions?: ValidationOptions) {
+export function IsCoordinatesTarget(validationOptions?: ValidationOptions) {
     return function (object: Object, propertyName: string) {
         registerDecorator({
             target: object.constructor,
             propertyName: propertyName,
             options: validationOptions,
             constraints: [],
-            validator: IsLocationsTargetConstraint
+            validator: IsCoordinatesTargetConstraint
         });
     };
 }

@@ -4,7 +4,7 @@
       <!-- TODO: add icons -->
       <!-- TODO: add curves -->
       <div class="col-md-3 col-lg-2 link">
-        <nuxt-link :to="routes[0].to">
+        <nuxt-link to="/">
           {{ siteName }}
         </nuxt-link>
       </div>

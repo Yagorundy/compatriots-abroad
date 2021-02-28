@@ -10,10 +10,10 @@ export class UsersService {
   }
 
   async get() {
-    return await this.axios.$get<IUserProfileDto>('/user')
+    return await this.axios.$get<IUserProfileDto>('/users')
   }
 
   async update(data: IUserProfileDto) {
-    return await this.axios.$put('/user', data)
+    return await this.axios.$put('/users', data)
   }
 }

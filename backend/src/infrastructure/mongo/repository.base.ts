@@ -62,8 +62,10 @@ export abstract class MongoRepository<T extends Document> {
         return await this.modelCasted.exists({ _id: id })
     }
 
-    protected async create(doc: LeanDocument<T>) {
-        return await this.modelCasted.create(doc) as DocumentNonNullableId<T>
+    protected async create(data: Partial<LeanDocument<T>>) {
+        const doc = new this.model(data)
+        await doc.validate()
+        return await doc.save() as DocumentNonNullableId<T>
     }
 
     protected async get(id: string, ...fields: (keyof LeanDocument<T>)[]) {

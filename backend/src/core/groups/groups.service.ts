@@ -27,13 +27,8 @@ export class GroupsService {
     async createGroup(creatorId: string, groupCreateDto: IGroupCreateDto) {
         const location = await this.geocodingService.getLocationByAddress(groupCreateDto.address)
         const group = await this.groupRepository.createGroup(creatorId, {
-            name: groupCreateDto.name,
-            description: groupCreateDto.description,
-            countryOfOrigin: groupCreateDto.countryOfOrigin,
-            address: groupCreateDto.address,
-            country: location.country,
-            lat: location.lat,
-            lng: location.lng
+            ...groupCreateDto,
+            ...location
         })
         await this.meilisearchService.upsertGroup(this.mapper.map(group, MeilisearchGroupDto, GroupSchemaDto))
     }
@@ -57,15 +52,15 @@ export class GroupsService {
         }
     }
 
-    async getGroupLocations(countryOfOriginCode: string) {
-        return await this.groupRepository.getGroupLocations(countryOfOriginCode)
+    async getGroupsCoordinates(countryOfOriginCode: string) {
+        return await this.groupRepository.getGroupsCoordinates(countryOfOriginCode)
     }
 
     async updateGroup(groupId: string, updaterId: string, groupUpdateDto: IGroupUpdateDto) {
         const creatorId = await this.groupRepository.getGroupCreatorId(groupId)
         if (creatorId !== updaterId) throw new AuthorizationError('You cannot edit this group!')
         const location = await this.geocodingService.getLocationByAddress(groupUpdateDto.address)
-        const updated = await this.groupRepository.updateGroup(groupId, { ...groupUpdateDto, ...location, creatorId: updaterId })
+        const updated = await this.groupRepository.updateGroup(groupId, { ...groupUpdateDto, ...location })
         await this.meilisearchService.upsertGroup(updated)
     }
 

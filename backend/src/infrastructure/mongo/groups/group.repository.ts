@@ -34,12 +34,12 @@ export class GroupRepository extends MongoRepository<GroupDocument> {
         return doc.creatorId
     }
 
-    async getGroupLocations(countryOfOriginCode: string): Promise<Pick<IGroupSchema, 'lat' | 'lng'>[]> {
+    async getGroupsCoordinates(countryOfOriginCode: string): Promise<Pick<IGroupSchema, 'lat' | 'lng'>[]> {
         const docs = await this.wrapQueryArray(this.model.find({ countryOfOrigin: countryOfOriginCode }, this.createProjection('lat', 'lng')))
         return docs.map(this.docToObj)
     }
 
-    async updateGroup(id: string, data: Omit<IGroupSchema, 'id'>) {
+    async updateGroup(id: string, data: Omit<IGroupSchema, 'id' | 'creatorId'>) {
         const doc = await this.patch(id, data)
         return this.docToObj(doc)
     }
