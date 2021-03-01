@@ -23,6 +23,14 @@ export class GroupsService {
     return await this.axios.$put(`/groups/${id}`, data)
   }
 
+  async like(id: string) {
+    await this.axios.$post(`/groups/like/${id}`) 
+  }
+
+  async unlike(id: string) {
+    await this.axios.$post(`/groups/unlike/${id}`) 
+  }
+
   async delete(id: string) {
     await this.axios.$delete(`/groups/${id}`)
   }

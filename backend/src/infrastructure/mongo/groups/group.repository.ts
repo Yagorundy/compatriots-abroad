@@ -29,6 +29,11 @@ export class GroupRepository extends MongoRepository<GroupDocument> {
         return docs.map(this.docToObj)
     }
 
+    async getGroupsShort(ids: string[]): Promise<Pick<IGroupSchema, 'id' | 'name'>[]> {
+        const docs = await this.wrapQueryArray(this.model.find({ _id: { $in: ids } }, this.createProjection('_id', 'name')))
+        return docs.map(this.docToObj)
+    }
+
     async getGroupCreatorId(id: string) {
         const doc = await this.get(id, 'creatorId');
         return doc.creatorId

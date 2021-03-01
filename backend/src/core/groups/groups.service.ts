@@ -36,19 +36,21 @@ export class GroupsService {
     async getGroup(groupId: string, userId: string): Promise<IGroupDto> {
         const [group, likedGroups] = await Promise.all([
             this.groupRepository.getGroup(groupId),
-            this.userRepository.getUserLikedGroups(userId)
+            this.userRepository.getUserLikedGroupsIds(userId)
         ])
         const isLiked = likedGroups.some(gid => gid === group.id)
         return this.mapper.map(group, GroupDto, GroupSchemaDto, { extraArguments: { isLiked } })
     }
 
     async getGroupsForUser(userId: string): Promise<IGetGroupsForUser> {
-        const [myGroups] = await Promise.all([
-            this.groupRepository.getGroupsForCreator(userId)
+        const [myGroups, groupsILike] = await Promise.all([
+            this.groupRepository.getGroupsForCreator(userId),
+            this.userRepository.getUserLikedGroupsIds(userId)
+                .then(ids => this.groupRepository.getGroupsShort(ids))
         ])
         return {
             myGroups,
-            groupsILike: []
+            groupsILike
         }
     }
 
@@ -62,6 +64,14 @@ export class GroupsService {
         const location = await this.geocodingService.getLocationByAddress(groupUpdateDto.address)
         const updated = await this.groupRepository.updateGroup(groupId, { ...groupUpdateDto, ...location })
         await this.meilisearchService.upsertGroup(updated)
+    }
+
+    async likeGroup(groupId: string, userId: string) {
+        await this.userRepository.updateLikedGroups(userId, groupId, 'like')
+    }
+
+    async unlikeGroup(groupId: string, userId: string) {
+        await this.userRepository.updateLikedGroups(userId, groupId, 'unlike')
     }
 
     async deleteGroup(groupId: string, deleterId: string) {

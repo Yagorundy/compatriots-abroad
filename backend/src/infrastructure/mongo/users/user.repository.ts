@@ -44,8 +44,28 @@ export class UserRepository extends MongoRepository<UserDocument> {
         return docs.map(this.docToObj)
     }
 
-    async getUserLikedGroups(id: string): Promise<string[]> {
+    async getUserLikedGroupsIds(id: string): Promise<string[]> {
         const doc = await this.get(id, 'likedGroups')
-        return doc.likedGroups
+        return doc.likedGroups.map(gid => gid.toString())
+    }
+
+    async updateLikedGroups(userId: string, groupId: string, action: 'like' | 'unlike') {
+        const { likedGroups } = await this.get(userId, 'likedGroups')
+        let update = false
+        if (action === 'like') {
+            if (!likedGroups.includes(groupId)) {
+                likedGroups.push(groupId)
+                update = true
+            }
+        } else if (action === 'unlike') {
+            const index = likedGroups.indexOf(groupId)
+            if (index !== -1) {
+                likedGroups.splice(index, 1)
+                update = true
+            }
+        }
+        if (update) {
+            await this.patch(userId, { likedGroups })
+        }
     }
 }

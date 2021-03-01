@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-show="!isLoading" class="container">
     <h6>{{ group.name }}</h6>
     <div class="description-box">
       <p class="description">{{ group.description }}</p>
@@ -13,7 +13,7 @@
         <button @click="deleteGroup">Delete</button>
       </div>
       <div v-else>
-        <button>{{ group.isLiked ? 'Unlike' : 'Like' }}</button>
+        <button @click="group.isLiked ? unlike() : like()">{{ group.isLiked ? 'Unlike' : 'Like' }}</button>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@ import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 
 @Component
 export default class extends mixins(AuthorizeMixin) {
+  isLoading = true
   group: IGroupDto = {
     id: '',
     creatorId: '',
@@ -47,7 +48,19 @@ export default class extends mixins(AuthorizeMixin) {
       this.group = await this.$groupsService.get(this.$route.params.id)
     } catch (_) {
       this.goToGroupsPage()
+    } finally {
+      this.isLoading = false
     }
+  }
+
+  async like() {
+    await this.$groupsService.like(this.group.id)
+    this.group.isLiked = true
+  }
+
+  async unlike() {
+    await this.$groupsService.unlike(this.group.id)
+    this.group.isLiked = false
   }
 
   async deleteGroup () {

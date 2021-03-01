@@ -26,6 +26,7 @@ import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 
 @Component
 export default class extends mixins(AuthorizeMixin) {
+  id: string = ''
   updateGroupData: IGroupUpdateDto = {
     name: '',
     description: '',
@@ -33,12 +34,9 @@ export default class extends mixins(AuthorizeMixin) {
     address: ''
   }
 
-  get id() {
-    return this.$route.params.id
-  }
-
   async created () {
     try {
+      this.id = this.$route.params.id
       if (!this.id) throw new Error();
       this.updateGroupData = await this.$groupsService.get(this.$route.params.id)
     } catch (_) {

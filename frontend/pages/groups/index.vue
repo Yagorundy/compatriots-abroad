@@ -3,13 +3,15 @@
     <div class="col-sm-12 col-md-6">
       <div class="container">
         <h6>Groups I like</h6>
-        <div v-if="groupsILike.length" class="groups-container">
-          <p
+        <ul v-if="groupsILike.length" class="groups-list">
+          <li
             :key="index"
             v-for="(group, index) in groupsILike"
-          ><nuxt-link :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link></p>
-        </div>
-        <button class="group-action-button"><nuxt-link to="/search?groups=true">Find a group</nuxt-link></button>
+          >
+            <nuxt-link :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link>
+          </li>
+        </ul>
+        <button class="group-action-button"><nuxt-link to="/search">Find a group</nuxt-link></button>
       </div>
     </div>
     <div class="col-sm-12 col-md-6">

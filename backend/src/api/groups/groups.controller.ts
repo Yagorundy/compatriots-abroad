@@ -34,6 +34,18 @@ export class GroupsController {
         return await this.groupsService.updateGroup(id, user.id, dto)
     }
 
+    @Post('like/:id')
+    @UseGuards(JwtGuard)
+    async likeGroup(@Param('id') id: string, @User() user: IUser) {
+        return await this.groupsService.likeGroup(id, user.id)
+    }
+
+    @Post('unlike/:id')
+    @UseGuards(JwtGuard)
+    async unlikeGroup(@Param('id') id: string, @User() user: IUser) {
+        return await this.groupsService.unlikeGroup(id, user.id)
+    }
+
     @Delete(':id')
     @UseGuards(JwtGuard)
     async deleteGroup(@Param('id') id: string, @User() user: IUser) {
