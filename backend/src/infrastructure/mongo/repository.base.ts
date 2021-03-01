@@ -72,8 +72,8 @@ export abstract class MongoRepository<T extends Document> {
         return await this.wrapQuerySingle(this.model.findById(id, this.createProjection(...fields)))
     }
 
-    protected async patch(id: string, doc: Partial<LeanDocument<T>>) {
-        return await this.modelCasted.findByIdAndUpdate(id, doc, { new: true }) as DocumentNonNullableId<T>
+    protected async patch(id: string, data: Partial<LeanDocument<T>>) {
+        return await this.modelCasted.findByIdAndUpdate(id, data, { new: true, useFindAndModify: false, runValidators: true }) as DocumentNonNullableId<T>
     }
 
     protected async delete(id: string) {

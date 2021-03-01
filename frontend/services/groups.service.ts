@@ -19,8 +19,8 @@ export class GroupsService {
     return await this.axios.$get<IGetGroupsForUser>('/groups')
   }
 
-  async update(data: IGroupUpdateDto) {
-    return await this.axios.$put('/groups', data)
+  async update(id: string, data: IGroupUpdateDto) {
+    return await this.axios.$put(`/groups/${id}`, data)
   }
 
   async delete(id: string) {

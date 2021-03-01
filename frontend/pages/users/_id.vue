@@ -36,7 +36,6 @@ import { AuthorizeMixin } from '~/mixins/authorize.mixin'
 @Component
 export default class extends mixins(AuthorizeMixin) {
   profile: IUserProfileDto = {
-    id: '',
     firstName: '',
     lastName: '',
     email: '',

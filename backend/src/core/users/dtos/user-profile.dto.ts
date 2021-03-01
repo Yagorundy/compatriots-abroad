@@ -4,9 +4,6 @@ import { IsCountryCode } from "../../validators/is-country-code";
 
 export class UserProfileDto implements IUserProfileDto {
     @IsString()
-    id: string
-
-    @IsString()
     firstName: string
 
     @IsString()

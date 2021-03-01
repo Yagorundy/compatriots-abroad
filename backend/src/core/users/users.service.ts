@@ -4,12 +4,8 @@ import { Injectable } from '@nestjs/common'
 import { hashSync } from 'bcryptjs'
 import { IUserCreateDto } from '../../../../common/transfer/users/user-create-dto.interface'
 import { IUserProfileDto } from '../../../../common/transfer/users/user-profile-dto.interface'
-import { IUserSchema } from '../../data/mongo/user-schema.interface'
 import { GeocodingService } from '../../infrastructure/geocoding/geocoding.service'
 import { UserRepository } from '../../infrastructure/mongo/users/user.repository'
-import { LocationDto } from '../locations/location.dto'
-import { UserCreateDto } from './dtos/user-create.dto'
-import { UserSchemaDto } from './dtos/user-schema.dto'
 
 @Injectable()
 export class UsersService {
@@ -44,7 +40,7 @@ export class UsersService {
     }
 
     async updateUserProfile(id: string, userProfileDto: IUserProfileDto) {
-        // TODO
+        await this.userRepository.updateUser(id, userProfileDto)
     }
 
     async getUsersCoordinates(countryOfOriginCode: string) {

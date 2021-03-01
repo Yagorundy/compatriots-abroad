@@ -19,7 +19,6 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe({
         transform: true,
         whitelist: true,
-        forbidNonWhitelisted: true,
         exceptionFactory: (errors: ClassValidatorValidationError[]) => {
             throw new ValidationError('Invalid data!', new ClassValidatorError(errors))
         }

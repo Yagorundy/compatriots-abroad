@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { NotFoundError } from '../../../../../common/errors/not-found.error'
-import { IUserProfileDto } from '../../../../../common/transfer/users/user-profile-dto.interface'
 import { IUserSchema } from '../../../data/mongo/user-schema.interface'
 import { User, UserDocument } from '../../../database/mongo/schemas/user.schema'
 import { MongoRepository } from '../repository.base'
@@ -26,17 +24,14 @@ export class UserRepository extends MongoRepository<UserDocument> {
         return this.docToObj(doc)
     }
 
-    async getUserProfile(id: string): Promise<Pick<IUserSchema, 'id' | 'email' | 'firstName' | 'lastName' | 'countryOfOrigin' | 'address'>> {
-        const doc = await this.get(id, '_id', 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')
+    async getUserProfile(id: string): Promise<Pick<IUserSchema, 'email' | 'firstName' | 'lastName' | 'countryOfOrigin' | 'address'>> {
+        const doc = await this.get(id, 'email', 'firstName', 'lastName', 'countryOfOrigin', 'address')
         return this.docToObj(doc)
     }
 
-    async updateUserProfile(id: string, userProfile: IUserProfileDto) {
-        try {
-            // TODO
-        } catch (err) {
-            throw new NotFoundError(`Could not update user profile with id ${id}!`, err)
-        }
+    async updateUser(id: string, data: Partial<Omit<IUserSchema, 'id'>>) {
+        const doc = await this.patch(id, data)
+        return this.docToObj(doc)
     }
 
     async getPublicUser(id: string): Promise<Pick<IUserSchema, 'id' | 'firstName' | 'lastName' | 'countryOfOrigin'>> {

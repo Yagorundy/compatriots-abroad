@@ -33,10 +33,13 @@ export default class extends mixins(AuthorizeMixin) {
     address: ''
   }
 
+  get id() {
+    return this.$route.params.id
+  }
+
   async created () {
     try {
-      const id = this.$route.params.id
-      if (!id) throw new Error();
+      if (!this.id) throw new Error();
       this.updateGroupData = await this.$groupsService.get(this.$route.params.id)
     } catch (_) {
       this.$router.push('/groups')
@@ -44,7 +47,7 @@ export default class extends mixins(AuthorizeMixin) {
   }
 
   async updateGroup() {
-    await this.$groupsService.update(this.updateGroupData)
+    await this.$groupsService.update(this.id, this.updateGroupData)
     this.$router.push('/groups')
   }
 }
