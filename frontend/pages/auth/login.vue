@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container container-with-form">
+    <h6>Log In</h6>
+
     <form @submit.prevent="login">
       <FormGroup label="Email">
         <input type="email" v-model="userLoginData.email" />
@@ -8,7 +10,7 @@
         <input v-model="userLoginData.password" />
       </FormGroup>
 
-      <button type="submit">Log In</button> or <nuxt-link to="/users/sign-up">Sign up</nuxt-link>
+      <button class="btn btn-primary" type="submit">Log In</button> or <nuxt-link class="btn btn-secondary" to="/users/sign-up">Sign up</nuxt-link>
     </form>
   </div>
 </template>
@@ -34,7 +36,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .container {
-  background: #fff;
+  margin-top: 18vh;
   max-width: 400px;
 }
 </style>

@@ -8,10 +8,10 @@
             :key="index"
             v-for="(group, index) in groupsILike"
           >
-            <nuxt-link :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link>
+            <nuxt-link class="link" :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link>
           </li>
         </ul>
-        <button class="group-action-button"><nuxt-link to="/search">Find a group</nuxt-link></button>
+        <button class="btn btn-secondary group-action-button"><nuxt-link to="/search">Find a group</nuxt-link></button>
       </div>
     </div>
     <div class="col-sm-12 col-md-6">
@@ -22,10 +22,10 @@
             :key="index"
             v-for="(group, index) in myGroups"
           >
-            <nuxt-link :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link>
+            <nuxt-link class="link" :to="`/groups/${group.id}`">{{ group.name }}</nuxt-link>
           </li>
         </ul>
-        <button class="group-action-button"><nuxt-link to="/groups/create">Create a group</nuxt-link></button>
+        <button class="btn btn-secondary group-action-button"><nuxt-link to="/groups/create">Create a group</nuxt-link></button>
       </div>
     </div>
   </div>
@@ -60,6 +60,12 @@ export default class extends mixins(AuthorizeMixin) {
     li {
       display: flex;
       justify-content: center;
+
+      .link {
+        padding: 0 4px;
+        border-left: 2px solid black;
+        border-right: 2px solid black;
+      }
     }
   }
 

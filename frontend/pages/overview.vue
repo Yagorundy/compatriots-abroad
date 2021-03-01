@@ -1,11 +1,11 @@
 <template>
   <div id="overview" class="container-fluid">
     <header>
-      <h6 v-if="!isAuthorized">The website that connects you with your people! <nuxt-link to="/users/sign-up">Sign up</nuxt-link> or <nuxt-link to="/auth/login">log in</nuxt-link> and find people and groups abroad.</h6>
+      <h6 v-if="!isAuthorized">The website that connects you with your people! <nuxt-link to="/users/sign-up">Sign Up</nuxt-link> or <nuxt-link to="/auth/login">Log In</nuxt-link> and find people and groups abroad.</h6>
       <h3 v-else>Hi {{ username }}!</h3>
     </header>
     
-    <main class="container-spaced-horizontal">
+    <main class="container-spaced-horizontally">
       <GoogleMap />
     </main>
   </div>

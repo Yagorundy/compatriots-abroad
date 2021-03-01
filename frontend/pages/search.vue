@@ -28,7 +28,6 @@
             </li>
           </ul>
         </div>
-        <p v-else class="result">---</p>
       </div>
     </div>
   </div>
@@ -80,7 +79,7 @@ h4 {
     .result {
       padding: 5px;
       margin-bottom: 10px;
-      border: 1px dashed black;
+      border: 1px dashed darkgreen;
 
       a {
         display: flex;

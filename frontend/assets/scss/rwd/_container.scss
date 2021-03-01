@@ -33,11 +33,11 @@ $container-margin-side: (
   .container-spaced {
     margin: $margin-value;
   }
-  .container-spaced-horizontal {
+  .container-spaced-horizontally {
     margin-left: $margin-value;
     margin-right: $margin-value;
   }
-  .container-spaced-vertical {
+  .container-spaced-vertically {
     margin-top: $margin-value;
     margin-bottom: $margin-value;
   }

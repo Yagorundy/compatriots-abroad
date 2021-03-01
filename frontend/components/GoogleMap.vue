@@ -1,7 +1,11 @@
 <template>
   <div id="map-container">
-    <div id="map-menu">
-      <CountrySelector v-model="selectedCountryCode" :disabled="areMarkersLoading" />
+    <div id="map-menu" :style="{ 'border-radius': borderRadius }">
+      <CountrySelector
+        v-model="selectedCountryCode"
+        :disabled="areMarkersLoading"
+        :borderRadius="borderRadius"
+      />
     </div>
     <div id="map" ref="map"></div>
   </div>
@@ -18,6 +22,8 @@ type MarkerType = 'user' | 'group'
 
 @Component
 export default class extends mixins(UserMixin) {
+  borderRadius = '20px'
+
   countries = countries
   selectedCountryCode = ''
   areMarkersLoading = false
@@ -97,7 +103,7 @@ export default class extends mixins(UserMixin) {
 <style lang="scss" scoped>
 #map-container {
   position: relative;
-  height: 65vh;
+  height: 70vh;
 
   #map-menu {
     position: absolute;
@@ -115,6 +121,7 @@ export default class extends mixins(UserMixin) {
   #map {
     width: 100%;
     height: 100%;
+    border-radius: 20px;
   }
 }
 </style>

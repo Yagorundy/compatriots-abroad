@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container container-with-form">
+    <h6>Profile</h6>
+    
     <form @submit.prevent="update">
       <FormGroup label="Email">
         <input type="email" v-model="profile.email" />
@@ -17,14 +19,19 @@
         <input v-model="profile.address" />
       </FormGroup>
 
-      <button type="submit" :disabled="!hasChanges">Save</button>
-    </form>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        :disabled="!hasChanges"
+      >Save</button>
 
-    <button
-      id="logout-btn"
-      type="button"
-      @click="logout"
-    >Logout</button>
+      <button
+        id="logout-btn"
+        class="btn btn-danger"
+        type="button"
+        @click="logout"
+      >Logout</button>
+    </form>    
   </div>
 </template>
 
@@ -60,9 +67,10 @@ export default class extends mixins(AuthorizeMixin) {
       })
   }
 
-  update() {
-    this.$usersService.update(this.profile)
-      .then(() => this.snapshotProfile())
+  async update() {
+    await this.$usersService.update(this.profile)
+    this.$jwtService.setToken
+    this.snapshotProfile()
   }
 
   logout() {
@@ -72,5 +80,13 @@ export default class extends mixins(AuthorizeMixin) {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  max-width: 500px;
+  margin-top: 10vh;
+
+  #logout-btn {
+    float: right;
+  }
+}
 
 </style>

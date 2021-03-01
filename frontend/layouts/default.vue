@@ -27,5 +27,9 @@ export default Vue.extend({
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  main {
+    height: 100%;
+  }
 }
 </style>

@@ -56,15 +56,15 @@ export default class extends mixins(UserMixin) {
 
 <style lang="scss" scoped>
 div.header {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   
   nav {
     display: flex;
     flex-wrap: wrap;
 
-    margin-bottom: 20px;
-    background: lightgreen;
-
+    background-color: #08e1ae;
+    background-image: linear-gradient(315deg, #08e1ae 0%, #98de5b 74%);    
+    
     ul {
       display: flex;
       flex-wrap: wrap;

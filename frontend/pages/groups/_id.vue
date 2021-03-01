@@ -9,11 +9,11 @@
       <p>Address: {{ group.address }}</p>
       
       <div v-if="group.creatorId === userId">
-        <nuxt-link :to="`/groups/edit/${group.id}`">Edit</nuxt-link>
-        <button @click="deleteGroup">Delete</button>
+        <nuxt-link class="btn btn-secondary" :to="`/groups/edit/${group.id}`">Edit</nuxt-link>
+        <button class="btn btn-danger" @click="deleteGroup">Delete</button>
       </div>
       <div v-else>
-        <button @click="group.isLiked ? unlike() : like()">{{ group.isLiked ? 'Unlike' : 'Like' }}</button>
+        <button class="btn btn-secondary" @click="group.isLiked ? unlike() : like()">{{ group.isLiked ? 'Unlike' : 'Like' }}</button>
       </div>
     </div>
   </div>

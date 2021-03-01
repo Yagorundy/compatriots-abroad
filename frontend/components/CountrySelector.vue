@@ -6,6 +6,7 @@
       v-model="countryName"
       :disabled="disabled"
       :readonly="!showDropdown"
+      :style="{ 'border-radius': borderRadius }"
       @input="handleInput"
       @click="onInputClicked"
     />
@@ -32,6 +33,7 @@ import { countries, countriesByCode } from '~/../common/constants/countries.cons
 export default class extends Vue {  
   @Prop({ required: true }) value!: string
   @Prop() disabled?: boolean
+  @Prop() borderRadius?: string
 
   countryName = ''
   showDropdown = false
@@ -108,7 +110,7 @@ $input-width: 250px;
       width: 100%;
       cursor: pointer;
       font-size: 14px;
-      color: red;
+      color: black;
       text-align: left;
       background: transparent;
       border: none;
@@ -124,7 +126,7 @@ $input-width: 250px;
 
       &.selected {
         padding-left: 16px;
-        color: green;
+        color: #923CB5;
         background-color: #f8f9fa;
         border-left: 4px solid white;
       }

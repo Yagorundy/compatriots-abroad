@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container container-with-form">
+    <h6>Create Group</h6>
+
     <form @submit.prevent="createGroup">
       <FormGroup label="Group Name">
         <input v-model="createGroupData.name" />
@@ -14,7 +16,7 @@
         <input v-model="createGroupData.address" />
       </FormGroup>
 
-      <button type="submit">Create</button>
+      <button class="btn btn-primary" type="submit">Create</button>
     </form>
   </div>
 </template>
@@ -41,5 +43,8 @@ export default class extends mixins(AuthorizeMixin) {
 </script>
 
 <style lang="scss" scoped>
-
+.container {
+  margin-top: 12vh;
+  max-width: 450px;
+}
 </style>

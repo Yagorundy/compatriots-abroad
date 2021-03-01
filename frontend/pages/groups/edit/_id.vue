@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container container-with-form">
+    <h6>Edit Group</h6>
+    
     <form @submit.prevent="updateGroup">
       <FormGroup label="Group Name">
         <input v-model="updateGroupData.name" />
@@ -14,7 +16,7 @@
         <input v-model="updateGroupData.address" />
       </FormGroup>
 
-      <button type="submit">Save</button>
+      <button class="btn btn-primary" type="submit">Save</button>
     </form>
   </div>
 </template>
@@ -38,7 +40,9 @@ export default class extends mixins(AuthorizeMixin) {
     try {
       this.id = this.$route.params.id
       if (!this.id) throw new Error();
-      this.updateGroupData = await this.$groupsService.get(this.$route.params.id)
+      const group = await this.$groupsService.get(this.$route.params.id)
+      if (group.creatorId !== this.userId) throw new Error()
+      this.updateGroupData = group
     } catch (_) {
       this.$router.push('/groups')
     }
@@ -52,5 +56,8 @@ export default class extends mixins(AuthorizeMixin) {
 </script>
 
 <style lang="scss" scoped>
-
+.container {
+  margin-top: 12vh;
+  max-width: 450px;
+}
 </style>
