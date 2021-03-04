@@ -22,7 +22,6 @@
       <button
         type="submit"
         class="btn btn-primary"
-        :disabled="!hasChanges"
       >Save</button>
 
       <button
@@ -53,10 +52,6 @@ export default class extends mixins(AuthorizeMixin) {
 
   private snapshotProfile() {
     this.profileSnapshot = JSON.parse(JSON.stringify(this.profile))
-  }
-
-  get hasChanges() {
-    return (Object.keys(this.profile) as (keyof IUserProfileDto)[]).some(key => this.profile[key] != this.profileSnapshot[key])
   }
 
   created() {

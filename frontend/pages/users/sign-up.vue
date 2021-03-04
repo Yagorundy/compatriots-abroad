@@ -19,13 +19,17 @@
         <input v-model="createUserData.address" />
       </FormGroup>
       <FormGroup label="Password">
-        <input v-model="createUserData.password" />
+        <input type="password" v-model="createUserData.password" />
       </FormGroup>
       <FormGroup label="Confirm Password">
         <input v-model="confirmPassword" />
       </FormGroup>
 
-      <button class="btn btn-primary" type="submit">Sign up</button> or <nuxt-link class="btn btn-secondary" to="/auth/login">Log In</nuxt-link>
+      <div class="form-footer">
+        <button class="btn btn-primary" type="submit">Sign up</button>
+        <span>or</span>
+        <nuxt-link class="btn btn-secondary" to="/auth/login">Log In</nuxt-link>
+      </div>
     </form>
   </div>
 </template>

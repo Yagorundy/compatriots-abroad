@@ -7,10 +7,14 @@
         <input type="email" v-model="userLoginData.email" />
       </FormGroup>
       <FormGroup label="Password">
-        <input v-model="userLoginData.password" />
+        <input type="password" v-model="userLoginData.password" />
       </FormGroup>
 
-      <button class="btn btn-primary" type="submit">Log In</button> or <nuxt-link class="btn btn-secondary" to="/users/sign-up">Sign up</nuxt-link>
+      <div class="form-footer">
+        <button class="btn btn-primary" type="submit">Log In</button>
+        <span>or</span>
+        <nuxt-link class="btn btn-secondary" to="/users/sign-up">Sign up</nuxt-link>
+      </div>
     </form>
   </div>
 </template>

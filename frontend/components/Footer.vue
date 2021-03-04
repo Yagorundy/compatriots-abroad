@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 footer {
-  margin-top: auto;
+  margin-top: 20px;
   width: 100%;
   padding: 1vh 0;
   text-align: center;

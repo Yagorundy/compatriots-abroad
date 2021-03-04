@@ -3,7 +3,6 @@ import { JwtService } from '@nestjs/jwt';
 import { compareSync } from "bcryptjs";
 import { InvalidLoginError } from "../../../../common/errors/auth/invalid-login.error";
 import { IJwtResponseDto } from "../../../../common/transfer/auth/jwt-response-dto.interface";
-import { IUserPublicDto } from "../../../../common/transfer/users/user-public-dto.interface";
 import { IUserIdentity } from "../../data/mongo/user-identity.interface";
 import { UserRepository } from "../../infrastructure/mongo/users/user.repository";
 import { UserLoginDto } from "./dtos/user-login.dto";
@@ -17,23 +16,21 @@ export class AuthService {
         try {
             const identity = await this.userRepository.getIdentity(userLoginDto.email)
             if (!compareSync(userLoginDto.password, identity.passwordHash)) throw new Error('Invalid password!')
-            const publicUser = await this.userRepository.getPublicUser(identity.id);
-            return this.createJwtResponse(identity, publicUser)
+            return this.createJwtResponse(identity)
         } catch (err) {
             throw new InvalidLoginError(`Wrong email or password!`, err)
         }
     }
 
-    private createJwtResponse(identity: IUserIdentity, publicUser: IUserPublicDto): IJwtResponseDto {
+    private createJwtResponse(identity: IUserIdentity): IJwtResponseDto {
         return {
-            access_token: this.signToken(identity, publicUser)
+            access_token: this.signToken(identity)
         }
     }
 
-    private signToken(identity: IUserIdentity, publicUser: IUserPublicDto) {
+    private signToken(identity: IUserIdentity) {
         return this.jwtService.sign({
-            sub: identity.id,
-            ...publicUser
+            sub: identity.id
         } as IJwtPayload);
     }
 }

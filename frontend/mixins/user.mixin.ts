@@ -1,14 +1,8 @@
 import { Component, Vue } from "nuxt-property-decorator";
-import { IUserPublicDto } from "~/../common/transfer/users/user-public-dto.interface";
-
-interface IUser extends IUserPublicDto {
-  id: string
-}
 
 export interface IUserMixin {
   readonly isAuthorized: boolean
   readonly userId: string | undefined
-  readonly user: IUser | undefined
 }
 
 @Component
@@ -26,17 +20,5 @@ export class UserMixin extends Vue implements IUserMixin {
 
   get userId() {
     return this.$jwtService.getTokenPayload()?.sub
-  }
-
-  get user() {
-    const tokenPayload = this.$jwtService.getTokenPayload()
-    if (tokenPayload) {
-      return {
-        id: tokenPayload.sub,
-        firstName: tokenPayload.firstName,
-        lastName: tokenPayload.lastName,
-        countryOfOrigin: tokenPayload.countryOfOrigin
-      }
-    }
   }
 }

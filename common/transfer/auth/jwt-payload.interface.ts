@@ -1,5 +1,3 @@
-import { IUserPublicDto } from "../users/user-public-dto.interface";
-
-export interface IJwtPayload extends IUserPublicDto {
+export interface IJwtPayload {
     sub: string
 }
