@@ -8,11 +8,11 @@
       <p>Country of origin: {{ group.countryOfOrigin }}</p>
       <p>Address: {{ group.address }}</p>
       
-      <div v-if="group.creatorId === userId">
+      <div v-if="group.creatorId === userId" class="buttons flex">
         <nuxt-link class="btn btn-secondary" :to="`/groups/edit/${group.id}`">Edit</nuxt-link>
         <button class="btn btn-danger" @click="deleteGroup">Delete</button>
       </div>
-      <div v-else>
+      <div v-else class="buttons">
         <button class="btn btn-secondary" @click="group.isLiked ? unlike() : like()">{{ group.isLiked ? 'Unlike' : 'Like' }}</button>
       </div>
     </div>
@@ -81,8 +81,12 @@ export default class extends mixins(AuthorizeMixin) {
 }
 
 .details {
-  p {
-
+  .buttons {
+      margin-top: 10px;
+      
+    .btn-danger {
+      margin-left: 5px;
+    }
   }
 }
 </style>

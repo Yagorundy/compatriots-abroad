@@ -84,7 +84,7 @@ export default class extends mixins(UserMixin) {
   async getUserCountryCode(): Promise<string | undefined> {
     let countryCode: string | undefined
     if (this.isAuthorized) {
-      countryCode = this.$jwtService.getTokenPayload()?.countryOfOrigin
+      // countryCode = this.$jwtService.getTokenPayload()?.countryOfOrigin
     }
     if (!countryCode && navigator.geolocation) {
       const location = await new Promise<ICoordinatesDto>((res, rej) =>
