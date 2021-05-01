@@ -4,7 +4,7 @@ import { getMeilisearchClient } from "../../../helpers/migration.helper";
 
 export async function up() {
     const client = await getMeilisearchClient()
-    const index = await client.createIndex(MEILISEARCH_GROUPS_INDEX, { primaryKey: 'id' as keyof IMeilisearchGroup })
+    const index = await client.getOrCreateIndex(MEILISEARCH_GROUPS_INDEX, { primaryKey: 'id' as keyof IMeilisearchGroup })
     await index.updateSettings({
         searchableAttributes: ['name', 'description'] as (keyof IMeilisearchGroup)[],
         attributesForFaceting: ['countryOfOrigin'] as (keyof IMeilisearchGroup)[]

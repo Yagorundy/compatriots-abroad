@@ -62,6 +62,7 @@ export default class extends mixins(AuthorizeMixin) {
       justify-content: center;
 
       .link {
+        margin-top: 5px;
         padding: 0 4px;
         border-left: 2px solid black;
         border-right: 2px solid black;

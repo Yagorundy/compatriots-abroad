@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "author": "",
   "private": true,
@@ -16,8 +16,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate-meilisearch-up": "npm run build && migrate up --migrations-dir dist/backend/src/database/meilisearch/migrations --matches *.js --store ./dist/backend/src/database/migration-store/meilisearch.store.js",
-    "migrate-meilisearch-down": "npm run build && migrate down --migrations-dir dist/backend/src/database/meilisearch/migrations --matches *.js --store ./dist/backend/src/database/migration-store/meilisearch.store.js"
+    "migrate-meilisearch": "npm run build && migrate up --migrations-dir dist/backend/src/database/meilisearch/migrations --matches *.js --store ./dist/backend/src/database/migration-store/meilisearch.store.js"
   },
   "dependencies": {
     "@automapper/classes": "^3.0.8",
@@ -34,7 +33,7 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.13.0",
     "helmet": "^4.4.1",
-    "meilisearch": "^0.18.1",
+    "meilisearch": "^0.18.2",
     "mongoose": "^5.11.9",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

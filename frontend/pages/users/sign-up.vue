@@ -22,7 +22,7 @@
         <input type="password" v-model="createUserData.password" />
       </FormGroup>
       <FormGroup label="Confirm Password">
-        <input v-model="confirmPassword" />
+        <input type="password" v-model="confirmPassword" />
       </FormGroup>
 
       <div class="form-footer">

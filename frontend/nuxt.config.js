@@ -58,6 +58,10 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
 
+  server: {
+    port: process.env.FRONTEND_PORT
+  },
+
   proxy: {
     [process.env.BACKEND_PREFIX]: process.env.BACKEND_URL
   },

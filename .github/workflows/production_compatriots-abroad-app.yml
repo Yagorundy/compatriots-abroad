@@ -21,17 +21,38 @@ jobs:
       with:
         node-version: '12.x'
 
-    - name: npm install, build, and test
+    - name: npm install and build frontend
       run: |
+        cd frontend
         npm install
-        npm run build --if-present
-        npm run test --if-present
+        npm run build
 
-    - name: Upload artifact for deployment job
+    - name: npm install and build backend
+      run: |
+        cd backend
+        npm install
+        npm run build
+
+    - name: create bundle
+      run: |
+        mkdir -p bundle/frontend
+        cp -r frontend/.nuxt/* bundle/frontend
+        mkdir -p bundle/backend
+        cp -r backend/dist/* bundle/backend
+        cp backend/package.json bundle/backend
+        cd bundle/backend
+        npm install --only=prod
+
+    - name: zip bundle
+      uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r bundle.zip bundle
+
+    - name: Upload zipped bundle for deployment job
       uses: actions/upload-artifact@v2
       with:
-        name: node-app
-        path: .
+        name: bundle
+        path: bundle.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -44,7 +65,7 @@ jobs:
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
       with:
-        name: node-app
+        name: bundle
 
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
