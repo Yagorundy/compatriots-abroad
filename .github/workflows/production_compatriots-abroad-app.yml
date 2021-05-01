@@ -35,9 +35,9 @@ jobs:
 
     - name: create bundle
       run: |
-        mkdir bundle/frontend
+        mkdir -p bundle/frontend
         cp -r frontend/.nuxt/* bundle/frontend
-        mkdir bundle/backend
+        mkdir -p bundle/backend
         cp -r backend/dist/* bundle/backend
         cp backend/package.json bundle/backend
         cd bundle/backend
