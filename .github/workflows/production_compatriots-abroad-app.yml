@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - compatriots-abroad-app
+name: Build and deploy to compatriots-abroad-app
 
 on:
   push:
@@ -66,6 +66,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: bundle
+    
+    - name: Unzip bundle
+      uses: montudor/action-zip@v1
+      with:
+        args: unzip -qq bundle.zip -d bundle
 
     - name: 'Deploy to Azure Web App'
       id: deploy-to-webapp
@@ -74,4 +79,4 @@ jobs:
         app-name: 'compatriots-abroad-app'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f030976c6d7740c39778b96440d5507f }}
-        package: .
+        package: bundle
