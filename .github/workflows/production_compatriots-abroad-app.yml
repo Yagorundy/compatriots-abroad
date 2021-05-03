@@ -33,15 +33,20 @@ jobs:
         npm install
         npm run build
 
-    - name: bundle (frontend)
+    - name: create bundle dir and copy pm2 config
       run: |
-        mkdir -p bundle/frontend
+        mkdir bundle
+        cp ecosystem.config.js bundle
+
+    - name: bundle frontend
+      run: |
+        mkdir bundle/frontend
         cp -r frontend/{.nuxt,nuxt.config.js,package.json} bundle/frontend
         #cp frontend/.env bundle/frontend
         cd bundle/frontend
         npm install --only=prod
 
-    - name: bundle (backend)
+    - name: bundle backend
       run: |
         cp -r backend/dist/{backend,common} bundle
         cp backend/package.json bundle/backend
