@@ -33,13 +33,19 @@ jobs:
         npm install
         npm run build
 
-    - name: create bundle
+    - name: bundle (frontend)
       run: |
         mkdir -p bundle/frontend
-        cp -r frontend/.nuxt/* bundle/frontend
-        mkdir -p bundle/backend
-        cp -r backend/dist/* bundle/backend
+        cp -r frontend/{.nuxt,nuxt.config.js,package.json} bundle/frontend
+        #cp frontend/.env bundle/frontend
+        cd bundle/frontend
+        npm install --only=prod
+
+    - name: bundle (backend)
+      run: |
+        cp -r backend/dist/{backend,common} bundle
         cp backend/package.json bundle/backend
+        #cp backend/.env bundle/backend
         cd bundle/backend
         npm install --only=prod
 

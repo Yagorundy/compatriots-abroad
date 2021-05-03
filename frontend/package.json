@@ -3,23 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nuxt-ts",
-    "build": "nuxt-ts build",
-    "serve": "nuxt-ts start",
-    "generate": "nuxt-ts generate",
+    "start": "nuxt",
+    "build": "nuxt build",
+    "serve": "nuxt start",
+    "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "test": "jest"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.11.1",
-    "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.0.2",
     "core-js": "^3.6.5",
     "meilisearch": "^0.18.2",
-    "nuxt": "^2.14.6",
+    "nuxt": "^2.15.4",
     "nuxt-property-decorator": "^2.9.1"
   },
   "devDependencies": {
@@ -40,7 +39,7 @@
     "fibers": "^5.0.0",
     "jest": "^26.5.0",
     "sass": "^1.30.0",
-    "sass-loader": "^10.1.0",
+    "sass-loader": "^10.1.1",
     "ts-jest": "^26.4.1",
     "vue-jest": "^3.0.4"
   }
