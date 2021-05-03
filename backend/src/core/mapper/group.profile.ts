@@ -21,7 +21,7 @@ export class GroupProfile extends AutomapperProfile {
             mapper.createMap(GroupCreateDto, GroupSchemaDto)
 
             mapper.createMap(LocationDto, GroupSchemaDto)
-            mapper.createMap(AddressDto, UserSchemaDto)
+            mapper.createMap(AddressDto, GroupSchemaDto)
 
             mapper.createMap(GroupSchemaDto, MeilisearchGroupDto)
 
