@@ -81,8 +81,8 @@ export default {
   },
 
   // Environment variables client side
-  env: {
-    BACKEND_PREFIX: process.env.BACKEND_PREFIX,
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
+  publicRuntimeConfig: {
+    backendPrefix: process.env.BACKEND_PREFIX,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
   }
 }

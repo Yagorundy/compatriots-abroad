@@ -1,8 +1,8 @@
 import { Plugin } from "@nuxt/types";
 
-const p: Plugin = ({ $axios, $jwtService }) => {
+const p: Plugin = ({ $config, $axios, $jwtService }) => {
   $axios.interceptors.request.use(config => {
-    config.baseURL = process.env.BACKEND_PREFIX;
+    config.baseURL = $config.backendPrefix;
     config.headers.Authorization = 'Bearer ' + $jwtService.getToken()
     return config;
   })
