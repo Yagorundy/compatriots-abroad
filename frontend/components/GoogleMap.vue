@@ -1,5 +1,5 @@
 <template>
-  <div id="map-container">
+  <div id="map-container" :style="{ height: (isAuthorized ? 70 : 65) + 'vh' }">
     <div id="map-menu" :style="{ 'border-radius': borderRadius }">
       <CountrySelector
         v-model="selectedCountryCode"
@@ -68,7 +68,7 @@ export default class extends mixins(UserMixin) {
   }
 
   async initGoogleMap() {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY
+    const apiKey = this.$config.googleMapsApiKey
     if (!apiKey) throw new Error('Google maps api key is not present!')
     this.loader = new Loader({ apiKey })
 
@@ -103,7 +103,6 @@ export default class extends mixins(UserMixin) {
 <style lang="scss" scoped>
 #map-container {
   position: relative;
-  height: 70vh;
 
   #map-menu {
     position: absolute;
