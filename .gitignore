@@ -1,3 +1,6 @@
+# dotenv environment variables files
+.env
+
 # project docs
 70*
 

@@ -24,6 +24,6 @@ async function bootstrap() {
         }
     }))
 
-    await app.listen(appConfigService.port)
+    await app.listen(appConfigService.port, appConfigService.host)
 }
 bootstrap()
