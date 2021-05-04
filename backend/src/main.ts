@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { ValidationError as ClassValidatorValidationError } from 'class-validator'
 import { ValidationError } from '../../common/errors/validation.error'
@@ -24,6 +24,8 @@ async function bootstrap() {
         }
     }))
 
-    await app.listen(appConfigService.port, appConfigService.host)
+    await app.listen(appConfigService.port, appConfigService.host, async () => {
+        new Logger().log(`Server listening to ${appConfigService.host}:${appConfigService.port}`)
+    })
 }
 bootstrap()

@@ -14,7 +14,7 @@ export class AppConfigService {
     }
 
     get prefix() {
-        return this.configService.get<string>('BACKEND_PREFIX', '/api')
+        return this.configService.get<string>('BACKEND_PREFIX')
     }
 
     get allowedOrigin() {
