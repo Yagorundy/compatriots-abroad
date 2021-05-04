@@ -65,7 +65,7 @@ export default {
   },
 
   server: {
-    port: process.env.FRONTEND_PORT
+    port: process.env.PORT || process.env.FRONTEND_PORT
   },
 
   proxy: {
