@@ -17,6 +17,7 @@
     "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.0.2",
     "core-js": "^3.6.5",
+    "dotenv-expand": "^5.1.0",
     "meilisearch": "^0.18.2",
     "nuxt": "^2.15.4",
     "nuxt-property-decorator": "^2.9.1"
@@ -34,6 +35,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.5.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "dotenv-extended": "^2.9.0",
     "eslint": "^7.10.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "fibers": "^5.0.0",

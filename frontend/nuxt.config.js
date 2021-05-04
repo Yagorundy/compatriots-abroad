@@ -1,3 +1,9 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv-extended').load({ path: '../common/.env' })
+}
+
+require('dotenv-expand')({ parsed: process.env })
+
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -53,7 +59,9 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    proxy: true
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
@@ -65,7 +73,7 @@ export default {
   },
 
   server: {
-    port: process.env.PORT || process.env.FRONTEND_PORT
+    port: process.env.FRONTEND_PORT
   },
 
   proxy: {
