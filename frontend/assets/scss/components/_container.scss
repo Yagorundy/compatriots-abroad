@@ -9,8 +9,11 @@
     padding: 6px;
 
     .form-footer {
+      margin-top: 10px;
       display: flex;
-      
+      align-items: center;
+      justify-content: center;
+
       span {
         margin: 0 5px;
       }

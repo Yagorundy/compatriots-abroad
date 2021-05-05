@@ -6,7 +6,7 @@
   }
   @each $bp-name in $breakpoints {
     $bp-value: map-get($grid-breakpoints, $bp-name);
-    @media screen and (min-width: $bp-value * 1px) {
+    @media screen and (min-width: $bp-value) {
       @content($bp-name, $bp-value);
     }
   }

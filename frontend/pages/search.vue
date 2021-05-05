@@ -55,6 +55,8 @@ export default class extends mixins(AuthorizeMixin) {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/scss/abstracts/variables';
+
 h4 {
   margin-bottom: 20px;
 }
@@ -62,13 +64,26 @@ h4 {
 .search-container {
   .menu {
     display: flex;
+    flex-direction: column;
     
     .search-input {
-      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
     }
 
-    .search-country {
-      margin-left: 20px;
+    @media screen and (min-width: map-get($grid-breakpoints, $grid-bp-sm)) {
+      flex-direction: row;
+      align-items: center;
+
+      .search-input {
+        margin-bottom: 0;
+        width: 60%;
+        padding-right: 20px;
+      }
+      .search-country {
+        margin-left: auto;
+        width: 35%;
+      }
     }
   }
   .results {

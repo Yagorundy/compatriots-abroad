@@ -42,6 +42,7 @@ export default class extends mixins(UserMixin) {
     h6 {
 
       a {
+        white-space: nowrap;
         text-decoration: underline;
         color: green;
       }

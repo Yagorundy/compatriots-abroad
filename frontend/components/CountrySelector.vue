@@ -1,6 +1,7 @@
 <template>
   <div class="country-selector">
     <input
+      :ref="INPUT_REF_KEY"
       class="input"
       placeholder="Select a country"
       v-model="countryName"
@@ -13,6 +14,7 @@
     <ul
       v-show="showDropdown"
       class="dropdown"
+      :style="{ width: this.dropdownWidth + 'px' }"
     >
       <li
         :key="index"
@@ -38,6 +40,26 @@ export default class extends Vue {
   countryName = ''
   showDropdown = false
   useInputAsFilter = false
+
+  INPUT_REF_KEY = 'country-input'
+  get input() {
+    return this.$refs[this.INPUT_REF_KEY] as HTMLElement
+  }
+
+  dropdownWidth: number | null = null;
+  resizeDropdown() {
+    if (this.dropdownWidth !== this.input.clientWidth) {
+      this.dropdownWidth = this.input.clientWidth;
+    }
+  }
+
+  mounted() {
+    this.resizeDropdown()
+    window.addEventListener('resize', this.resizeDropdown)
+  }
+  destroyed() {
+    window.removeEventListener('resize', this.resizeDropdown)
+  }
 
   @Watch('value', { immediate: true })
   onValueUpdated() {
@@ -85,19 +107,16 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-$input-width: 250px;
 
 .country-selector {
   .input {
     cursor: pointer;
     padding: 2px 4px;
     text-align: center;
-    width: $input-width;
   }
 
   .dropdown {
     position: absolute;
-    width: $input-width;
     max-height: 200px;
     overflow-x: auto;
     list-style-type: none;
