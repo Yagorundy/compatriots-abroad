@@ -14,20 +14,19 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { nanoid } from 'nanoid'
 
 @Component
 export default class extends Vue {
   @Prop() label!: string;
   @Prop() value!: boolean;
 
-  id: string = ''
-  created() {
-    this.id = this._uid
-  }
+  readonly id = nanoid(6);
 }
 </script>
 
 <style lang="scss" scoped>
+// TODO: improve colors
 .toggle {
   display: flex;
   align-items: center;
