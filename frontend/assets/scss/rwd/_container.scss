@@ -11,6 +11,7 @@ $container-max-with: (
 .container {
   margin: 0 auto;
   padding: 0 15px;
+  max-width: 100%;
 
   @include grid-bp-iterator() using ($bp-name, $bp-value) {
     max-width: map-get($container-max-with, $bp-name);
