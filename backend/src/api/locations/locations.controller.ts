@@ -21,8 +21,8 @@ export class LocationsController {
         }
     }
 
-    @Get('country-code')
+    @Get('country')
     async getCountryCode(@Query() coordinates: CoordinatesDto) {
-        return await this.geocodingService.getCountryCodeByCoordinates(coordinates)
+        return await this.geocodingService.getCountryByCoordinates(coordinates)
     }
 }
