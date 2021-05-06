@@ -1,5 +1,7 @@
 import { Test } from "@nestjs/testing"
 import { AppModule } from "./app.module"
+import { JwtConfigService } from "./config/jwt/jwt-config.service"
+import { JwtConfigServiceFake } from "./config/jwt/jwt-config.service.fake"
 import { configureAppValidation } from "./configure-app-validation"
 import { GeocodingService } from "./infrastructure/geocoding/geocoding.service"
 import { GeocodingServiceFake } from "./infrastructure/geocoding/geocoding.service.fake"
@@ -22,6 +24,8 @@ export const getAppFake = async () => {
         .useValue(new GeocodingServiceFake())
         .overrideProvider(MeilisearchService)
         .useValue(new MeilisearchServiceFake())
+        .overrideProvider(JwtConfigService)
+        .useValue(new JwtConfigServiceFake())
         .compile()
 
     const app = module.createNestApplication();
