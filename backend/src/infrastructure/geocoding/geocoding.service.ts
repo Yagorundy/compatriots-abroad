@@ -3,6 +3,7 @@ import { AppError } from '../../../../common/errors/app.error'
 import { ICoordinatesDto } from '../../../../common/transfer/coordinates/coordinates-dto.interface'
 import { ILocation } from '../../data/common/location.interface'
 import { Geocoding } from '../../data/geocoding/geocoding.namespace'
+import { IGeocodingService } from './geocoding.service.contract'
 
 interface GeocodeParams {
     address?: string
@@ -10,7 +11,7 @@ interface GeocodeParams {
 }
 
 @Injectable()
-export class GeocodingService {
+export class GeocodingService implements IGeocodingService {
     constructor(private httpService: HttpService) {}
 
     private async _getLocation(params: GeocodeParams): Promise<ILocation> {

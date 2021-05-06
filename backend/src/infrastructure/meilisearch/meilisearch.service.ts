@@ -3,9 +3,10 @@ import { Config } from 'meilisearch'
 import { MEILISEARCH_GROUPS_INDEX } from '../../../../common/constants/meilisearch.constants'
 import { IMeilisearchGroup } from '../../../../common/transfer/meilisearch/meilisearch-group-dto.interface'
 import { MeilisearchClientService } from '../../database/meilisearch/meilisearch-client.service'
+import { IMeilisearchService } from './meilisearch.service.contract'
 
 @Injectable()
-export class MeilisearchService {
+export class MeilisearchService implements IMeilisearchService {
     constructor(private meilisearchClientService: MeilisearchClientService) {}
 
     async getPublicConfig(): Promise<Config> {
