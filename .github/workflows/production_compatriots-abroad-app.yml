@@ -33,6 +33,16 @@ jobs:
         npm install
         npm run build
 
+    - name: unit test backend
+      run: |
+        cd backend
+        npm test
+
+    - name: e2e test backend
+      run: |
+        cd backend
+        npm run test:e2e
+
     - name: create bundle dir and copy pm2 config
       run: |
         mkdir bundle

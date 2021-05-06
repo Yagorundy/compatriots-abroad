@@ -8,7 +8,6 @@ import { GroupDto } from '../groups/dtos/group.dto';
 import { MeilisearchGroupDto } from '../groups/dtos/meilisearch-group.dto';
 import { AddressDto } from '../locations/address.dto';
 import { LocationDto } from '../locations/location.dto';
-import { UserSchemaDto } from '../users/dtos/user-schema.dto';
 
 @Injectable()
 export class GroupProfile extends AutomapperProfile {

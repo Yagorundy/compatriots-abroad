@@ -2,6 +2,7 @@ import { NuxtAxiosInstance } from "@nuxtjs/axios";
 import { ICoordinatesDto } from "~/../common/transfer/coordinates/coordinates-dto.interface";
 import { IGetCoordinatesDto } from "~/../common/transfer/coordinates/get-coordinates-dto.interface";
 import { GetCoordinatesTarget } from "~/../common/transfer/coordinates/get-coordinates-target.type";
+import { IGetCountryByCoordinatesDto } from "~/../common/transfer/coordinates/get-country-by-coordinates-dto.interface";
 
 export class LocationsService {
   constructor(private axios: NuxtAxiosInstance) { }
@@ -12,6 +13,7 @@ export class LocationsService {
   }
 
   async getCountryCodeByLocation(location: ICoordinatesDto) {
-    return await this.axios.$get<string>('/country-code', { params: location })
+    const res = await this.axios.$get<IGetCountryByCoordinatesDto>('/country', { params: location })
+    return res.code
   }
 }
