@@ -3,29 +3,27 @@ import { AppModule } from "./app.module"
 import { JwtConfigService } from "./config/jwt/jwt-config.service"
 import { JwtConfigServiceFake } from "./config/jwt/jwt-config.service.fake"
 import { configureAppValidation } from "./configure-app-validation"
+import { MeilisearchClientService } from "./database/meilisearch/meilisearch-client.service"
 import { GeocodingService } from "./infrastructure/geocoding/geocoding.service"
 import { GeocodingServiceFake } from "./infrastructure/geocoding/geocoding.service.fake"
 import { MeilisearchService } from "./infrastructure/meilisearch/meilisearch.service"
 import { MeilisearchServiceFake } from "./infrastructure/meilisearch/meilisearch.service.fake"
-import { GroupRepository } from "./infrastructure/mongo/groups/group.repository"
-import { getMongoFakeGroupRepo } from "./infrastructure/mongo/groups/group.repository.fake"
-import { UserRepository } from "./infrastructure/mongo/users/user.repository"
-import { getMongoFakeUserRepo } from "./infrastructure/mongo/users/user.repository.fake"
 
 export const getAppFake = async () => {
     const module = await Test.createTestingModule({
         imports: [AppModule]
     })
-        .overrideProvider(UserRepository)
-        .useValue(await getMongoFakeUserRepo())
-        .overrideProvider(GroupRepository)
-        .useValue(await getMongoFakeGroupRepo())
-        .overrideProvider(GeocodingService)
-        .useValue(new GeocodingServiceFake())
+        .overrideProvider(MeilisearchClientService)
+        .useValue({})
         .overrideProvider(MeilisearchService)
         .useValue(new MeilisearchServiceFake())
+
+        .overrideProvider(GeocodingService)
+        .useValue(new GeocodingServiceFake())
+
         .overrideProvider(JwtConfigService)
         .useValue(new JwtConfigServiceFake())
+
         .compile()
 
     const app = module.createNestApplication();
