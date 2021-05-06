@@ -13,6 +13,7 @@ export const getAppFake = async () => {
     const module = await Test.createTestingModule({
         imports: [AppModule]
     })
+        // TODO: improve
         .overrideProvider(MeilisearchClientService)
         .useValue({})
         .overrideProvider(MeilisearchService)
