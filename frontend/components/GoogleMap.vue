@@ -66,11 +66,17 @@ export default class extends mixins(UserMixin) {
     else this.hideMarkers('group')
   }
 
+  private removeMarkers() {
+    this.coordinates = {}
+    this.hideMarkers('user')
+    this.hideMarkers('group')
+  }
+
   @Watch('selectedCountryCode')
   async onSelectedCountryCodeChanged() {
     this.areMarkersLoading = true
     this.map?.setCenter(countriesByCode[this.selectedCountryCode])
-    this.coordinates = {}
+    this.removeMarkers()
     await Promise.all([this.setUserMarkers(), this.setGroupMarkers()])    
     this.areMarkersLoading = false
   }
