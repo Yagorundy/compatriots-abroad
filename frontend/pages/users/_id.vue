@@ -13,7 +13,7 @@
         <input v-model="profile.lastName" />
       </FormGroup>
       <FormGroup label="Country of origin">
-        <CountrySelector v-model="profile.countryOfOrigin" />
+        <CountrySelector disabled="true" v-model="profile.countryOfOrigin" />
       </FormGroup>
       <FormGroup label="Address">
         <input v-model="profile.address" />

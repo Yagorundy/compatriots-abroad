@@ -110,7 +110,6 @@ export default class extends Vue {
 
 .country-selector {
   .input {
-    cursor: pointer;
     padding: 2px 4px;
     text-align: center;
   }
